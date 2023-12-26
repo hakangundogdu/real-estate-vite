@@ -10,6 +10,7 @@ import {
   BrowserRouter,
   Link,
 } from "react-router-dom";
+import Layout from "@/components/layout/Layout";
 
 const Loading = () => (
   <p className="p-4 w-full h-full text-center">Loading...</p>
@@ -17,30 +18,6 @@ const Loading = () => (
 
 const App = lazy(() => import("../pages/App"));
 const NotFound = lazy(() => import("../pages/NotFound"));
-
-function Layout() {
-  return (
-    <div>
-      <nav className="p-2 flex items-center justify-between">
-        <Link to="/" className="flex items-center">
-          <HomeIcon className="w-6 h-6 mr-2 text-accent" />
-          <p className="font-bold text-2xl">
-            Dream <span className="text-accent">Home</span>
-          </p>
-        </Link>
-        <div className="flex items-center">
-          <Link to="/about" className="mr-4">
-            Login
-          </Link>
-          <Link to="/about" className="mr-4">
-            <Button>Sign Up</Button>
-          </Link>
-        </div>
-      </nav>
-      <Outlet />
-    </div>
-  );
-}
 
 export const Router = () => {
   return (
@@ -73,7 +50,7 @@ const InnerRouter = () => {
   ];
   const element = useRoutes(routes);
   return (
-    <div>
+    <div className="w-full">
       <Suspense fallback={<Loading />}>{element}</Suspense>
     </div>
   );
