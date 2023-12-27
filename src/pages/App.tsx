@@ -23,7 +23,7 @@ function App() {
         <div className="flex items-center justify-center w-full h-full bg-gray-900 bg-opacity-40 py-12 px-4">
           <div className="p-2 md:w-2/4 lg:w-1/3 w-full">
             <p className="font-bold text-white text-4xl">
-              Find Your Dream Home
+              Find Your Home
             </p>
             <p className=" text-white">
               Search properties for sale and to rent in the UK
