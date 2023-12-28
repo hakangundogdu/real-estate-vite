@@ -1,10 +1,8 @@
-import * as React from "react";
-import { BiBath, BiBed, BiHeart } from "react-icons/bi";
-import heartIcon from "@/assets/heart.svg";
-import { HeartIcon } from "@heroicons/react/24/solid";
 import { HeartIcon as HeartOutline } from "@heroicons/react/24/outline";
+import { HeartIcon } from "@heroicons/react/24/solid";
+import * as React from "react";
+import { BiBath, BiBed } from "react-icons/bi";
 
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
