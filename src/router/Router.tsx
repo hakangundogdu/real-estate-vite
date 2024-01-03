@@ -1,26 +1,27 @@
-import { HomeIcon } from '@heroicons/react/24/solid';
-import { SignalIcon } from 'lucide-react';
-import { lazy, Suspense } from 'react';
+import { HomeIcon } from "@heroicons/react/24/solid";
+import { SignalIcon } from "lucide-react";
+import { lazy, Suspense } from "react";
 import {
 	BrowserRouter,
 	Link,
 	Outlet,
 	RouteObject,
 	useRoutes,
-} from 'react-router-dom';
+} from "react-router-dom";
 
-import Layout from '@/components/layout/Layout';
-import { Button } from '@/components/ui/button';
-import About from '@/pages/About';
-import { Signin } from '@/pages/SignIn';
-import { AuthProvider } from '@/context/authContext';
+import Layout from "@/components/layout/Layout";
+import { Button } from "@/components/ui/button";
+import About from "@/pages/About";
+import { Signin } from "@/pages/SignIn";
+import { AuthProvider } from "@/context/authContext";
+import PropertyDetail from "@/pages/PropertyDetail";
 
 const Loading = () => (
 	<p className="p-4 w-full h-full text-center">Loading...</p>
 );
 
-const App = lazy(() => import('../pages/App'));
-const NotFound = lazy(() => import('../pages/NotFound'));
+const App = lazy(() => import("../pages/App"));
+const NotFound = lazy(() => import("../pages/NotFound"));
 
 export const Router = () => {
 	return (
@@ -33,7 +34,7 @@ export const Router = () => {
 const InnerRouter = () => {
 	const routes: RouteObject[] = [
 		{
-			path: '/',
+			path: "/",
 			element: <Layout />,
 			children: [
 				{
@@ -41,15 +42,19 @@ const InnerRouter = () => {
 					element: <App />,
 				},
 				{
-					path: '/about',
+					path: "/about",
 					element: <About />,
 				},
 				{
-					path: '/login',
+					path: "/properties/:id",
+					element: <PropertyDetail />,
+				},
+				{
+					path: "/login",
 					element: <Signin />,
 				},
 				{
-					path: '*',
+					path: "*",
 					element: <NotFound />,
 				},
 			],

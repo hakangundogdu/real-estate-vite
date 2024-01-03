@@ -1,10 +1,10 @@
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import {
 	UserIcon,
 	HeartIcon,
 	CogIcon,
 	ArrowLeftStartOnRectangleIcon,
-} from '@heroicons/react/24/outline';
+} from "@heroicons/react/24/outline";
 
 import {
 	DropdownMenu,
@@ -14,9 +14,9 @@ import {
 	DropdownMenuLabel,
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { useContext } from 'react';
-import AuthContext from '@/context/authContext';
+} from "@/components/ui/dropdown-menu";
+import { useContext } from "react";
+import AuthContext from "@/context/authContext";
 
 export function UserNav() {
 	const { user, logOut } = useContext(AuthContext);
@@ -59,7 +59,7 @@ export function UserNav() {
 				</DropdownMenuGroup>
 				<DropdownMenuSeparator />
 				<DropdownMenuItem onClick={logOut}>
-					{' '}
+					{" "}
 					<ArrowLeftStartOnRectangleIcon className="w-4 h-4 mr-2" />
 					Log out
 				</DropdownMenuItem>

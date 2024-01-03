@@ -1,10 +1,10 @@
-import '../App.css';
+import "../App.css";
 
-import { useState } from 'react';
+import { useState } from "react";
 
-import PropertyList from '@/components/PropertyList';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import PropertyList from "@/components/PropertyList";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
 	Select,
 	SelectContent,
@@ -12,10 +12,16 @@ import {
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
-} from '@/components/ui/select';
+} from "@/components/ui/select";
+import { getProperties } from "@/api/api";
 
 function App() {
-	const [tab, setTab] = useState('sale');
+	const [tab, setTab] = useState("sale");
+
+	const { data: properties, isLoading } = getProperties({ _limit: 10 });
+
+	console.log("properties", properties);
+	console.log("isLoading", isLoading);
 
 	const onTabChange = (value: string) => {
 		setTab(value);
@@ -26,7 +32,7 @@ function App() {
 				className="w-full bg-center bg-cover h-96"
 				style={{
 					backgroundImage:
-						'url(https://images.unsplash.com/photo-1570129477492-45c003edd2be?q=80&w=2070)',
+						"url(https://images.unsplash.com/photo-1570129477492-45c003edd2be?q=80&w=2070)",
 				}}
 			>
 				<div className="flex items-center justify-center w-full h-full bg-gray-900 bg-opacity-40 py-12 px-4">
@@ -64,7 +70,7 @@ function App() {
 					</div>
 				</div>
 			</div>
-			<PropertyList />
+			{properties && <PropertyList properties={properties} />}
 		</div>
 	);
 }

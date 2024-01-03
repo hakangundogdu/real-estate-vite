@@ -2,54 +2,66 @@ import { HeartIcon as HeartOutline } from "@heroicons/react/24/outline";
 import { HeartIcon } from "@heroicons/react/24/solid";
 import * as React from "react";
 import { BiBath, BiBed } from "react-icons/bi";
+import { millify } from "millify";
 
 import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
+	Card,
+	CardContent,
+	CardFooter,
+	CardHeader,
+	CardTitle,
 } from "@/components/ui/card";
+import { IProperty } from "@/types";
 
-function PropertyCard() {
-  const [saved, setSaved] = React.useState(false);
-  console.log("saved", saved);
+const PropertyCard = ({ property }: { property: IProperty }) => {
+	const [saved, setSaved] = React.useState(false);
+	console.log("saved", saved);
 
-  return (
-    <Card className="relative text-left overflow-hidden">
-      <img
-        className=""
-        src="https://lid.zoocdn.com/645/430/7fc56b1e233b230bcf27b3249548153fed546cf7.jpg"
-        alt=""
-      />
+	return (
+		<Card className="relative text-left overflow-hidden">
+			<img
+				className="w-full h-40 object-cover"
+				src={property.image_354_255_url}
+				alt="image of house"
+			/>
 
-      <CardHeader className="relative">
-        <CardTitle>£4M</CardTitle>
-        <p className="mt-2 font-semibold text-primary">2 bed flat for sale</p>
-        <button
-          className="absolute top-6 right-6 !mt-0"
-          onClick={() => setSaved(!saved)}
-        >
-          {saved ? (
-            <HeartIcon className="w-6 h-6 text-destructive" />
-          ) : (
-            <HeartOutline className="w-6 h-6 text-destructive" />
-          )}
-        </button>
-      </CardHeader>
-      <CardContent>
-        <p className="text-sm text-muted-foreground">
-          Albert Court, Prince Consort Road, London SW7
-        </p>
-      </CardContent>
-      <CardFooter className="flex ">
-        <BiBed className="size-5 text-primary" />
-        <p className="text-sm text-muted-foreground ml-2 mr-4">2</p>
-        <BiBath className="size-5 text-primary" />
-        <p className="text-sm text-muted-foreground ml-2">2</p>
-      </CardFooter>
-    </Card>
-  );
-}
+			<CardHeader className="relative">
+				<CardTitle>£{millify(+property.price)}</CardTitle>
+				<p className="mt-2 font-semibold text-primary">
+					{property.title.length > 28
+						? property.title.substring(0, 25) + " ..."
+						: property.title}
+				</p>
+				<button
+					className="absolute top-6 right-6 !mt-0"
+					onClick={() => setSaved(!saved)}
+				>
+					{saved ? (
+						<HeartIcon className="w-6 h-6 text-destructive" />
+					) : (
+						<HeartOutline className="w-6 h-6 text-destructive" />
+					)}
+				</button>
+			</CardHeader>
+			<CardContent>
+				<p className="text-sm text-muted-foreground">
+					{property.displayable_address.length > 35
+						? property.displayable_address.substring(0, 35) + " ..."
+						: property.displayable_address}
+				</p>
+			</CardContent>
+			<CardFooter className="flex ">
+				<BiBed className="size-5 text-primary" />
+				<p className="text-sm text-muted-foreground ml-2 mr-4">
+					{property.num_bedrooms}
+				</p>
+				<BiBath className="size-5 text-primary" />
+				<p className="text-sm text-muted-foreground ml-2">
+					{property.num_bathrooms}
+				</p>
+			</CardFooter>
+		</Card>
+	);
+};
 
 export default PropertyCard;
