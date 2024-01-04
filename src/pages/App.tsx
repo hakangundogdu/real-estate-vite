@@ -1,6 +1,6 @@
 import "../App.css";
-
-import { useState } from "react";
+import { CgSpinner } from "react-icons/cg";
+import { FormEvent, useEffect, useRef, useState } from "react";
 
 import PropertyList from "@/components/PropertyList";
 import { Button } from "@/components/ui/button";
@@ -14,20 +14,45 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { getProperties } from "@/api/api";
+import { useQuery } from "@tanstack/react-query";
+import { LoadingSpinner } from "@/components/ui/loading";
 
 function App() {
 	const [tab, setTab] = useState("sale");
+	const [location, setLocation] = useState("");
+	const inputRef = useRef(null);
 
-	const { data: properties, isLoading } = getProperties({ _limit: 10 });
+	// const { data: properties, isLoading } = getProperties({ _limit: 12 });
+
+	const {
+		data: properties,
+		isLoading,
+		refetch,
+		isFetching,
+	} = useQuery({
+		queryKey: ["getProperties"],
+		queryFn: () =>
+			getProperties({
+				county: location.length > 0 ? location : null,
+				listing_status: tab,
+				_limit: location.length === 0 ? 12 : null,
+			}),
+		enabled: false,
+	});
+
+	useEffect(() => {
+		refetch();
+	}, []);
 
 	console.log("properties", properties);
 	console.log("isLoading", isLoading);
+	console.log("isFetching", isFetching);
 
 	const onTabChange = (value: string) => {
 		setTab(value);
 	};
 	return (
-		<div className="flex-auto w-full">
+		<div className="flex-auto flex-col w-full">
 			<div
 				className="w-full bg-center bg-cover h-96"
 				style={{
@@ -60,9 +85,13 @@ function App() {
 								<Input
 									type="search"
 									placeholder="Search"
+									onChange={(event) => setLocation(event.target.value)}
 									className="rounded-full border-none bg-transparent focus-visible:ring-0 focus-visible:ring-ring focus-visible:ring-offset-0 "
 								/>
-								<Button className="rounded-r-full rounded-l-none ">
+								<Button
+									className="rounded-r-full rounded-l-none"
+									onClick={() => refetch()}
+								>
 									Search
 								</Button>
 							</div>
@@ -70,7 +99,12 @@ function App() {
 					</div>
 				</div>
 			</div>
-			{properties && <PropertyList properties={properties} />}
+			{isFetching && (
+				<div className="h-48 m-auto flex items-center">
+					<CgSpinner className="animate-spin m-auto text-primary text-5xl" />
+				</div>
+			)}
+			{!isFetching && properties && <PropertyList properties={properties} />}
 		</div>
 	);
 }
