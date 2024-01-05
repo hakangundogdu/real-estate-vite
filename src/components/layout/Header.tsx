@@ -52,7 +52,7 @@ const Header = () => {
 			) : (
 				<div className="flex items-center gap-4">
 					<Button
-						className="bg-secondary text-primary hover:text-white"
+						className="bg-secondary text-primary rounded-full hover:text-white"
 						size="icon"
 					>
 						<HeartIcon className="size-6" />

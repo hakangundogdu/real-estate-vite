@@ -25,10 +25,18 @@ export function UserNav() {
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
 				<Button
-					className="bg-secondary text-primary hover:text-white"
+					className="bg-secondary text-primary rounded-full hover:text-white"
 					size="icon"
 				>
-					<UserIcon className="size-6" />
+					{user?.photoURL ? (
+						<img
+							src={user?.photoURL}
+							alt="user"
+							className="size-10 rounded-full"
+						/>
+					) : (
+						<UserIcon className="size-6" />
+					)}
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className="w-56" align="end" forceMount>

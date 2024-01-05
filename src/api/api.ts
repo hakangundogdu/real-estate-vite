@@ -6,7 +6,7 @@ const baseURL = "https://adventurous-hem-tuna.cyclic.app/listings";
 export interface IQueryProps {
 	county: string | null;
 	listing_status: string | null;
-	_limit: number;
+	_limit: number | null;
 }
 
 // export const getProperties = async () => {
@@ -23,7 +23,9 @@ export interface IQueryProps {
 
 // 	return res.data;
 // };
-export const getProperties = async (props: IQueryProps) => {
+export const getProperties = async (
+	props: IQueryProps
+): Promise<IProperty[]> => {
 	const params = {
 		county: props.county,
 		listing_status: props.listing_status,
@@ -38,7 +40,7 @@ export const getProperties = async (props: IQueryProps) => {
 	return res.data;
 };
 
-export const getProperty = async (id: string) => {
+export const getProperty = async (id: string): Promise<IProperty> => {
 	const res = await axios.get(`${baseURL}/${id}`);
 	return res.data;
 };
