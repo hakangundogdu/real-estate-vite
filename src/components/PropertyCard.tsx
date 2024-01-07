@@ -54,6 +54,7 @@ const PropertyCard = ({ property }: { property: IProperty }) => {
 						? property.displayable_address.substring(0, 35) + " ..."
 						: property.displayable_address}
 				</p>
+				<p className="text-sm text-muted-foreground mt-2">{property.county}</p>
 			</CardContent>
 			<CardFooter className="flex ">
 				<BiBed className="size-5 text-primary" />

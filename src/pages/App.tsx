@@ -1,6 +1,6 @@
 import "../App.css";
 import { CgSpinner } from "react-icons/cg";
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 
 import PropertyList from "@/components/PropertyList";
 import { Button } from "@/components/ui/button";
@@ -15,12 +15,10 @@ import {
 } from "@/components/ui/select";
 import { getProperties } from "@/api/api";
 import { useQuery } from "@tanstack/react-query";
-import { LoadingSpinner } from "@/components/ui/loading";
 
 function App() {
 	const [tab, setTab] = useState("sale");
 	const [location, setLocation] = useState("");
-	const inputRef = useRef(null);
 
 	// const { data: properties, isLoading } = getProperties({ _limit: 12 });
 
@@ -47,6 +45,14 @@ function App() {
 	console.log("properties", properties);
 	console.log("isLoading", isLoading);
 	console.log("isFetching", isFetching);
+	console.log("location", location);
+
+	const locationChangeHandler = (
+		event: React.ChangeEvent<HTMLInputElement>
+	) => {
+		const loc = event.target.value;
+		setLocation(loc.charAt(0).toUpperCase() + loc.substring(1).toLowerCase());
+	};
 
 	const onTabChange = (value: string) => {
 		setTab(value);
@@ -72,7 +78,7 @@ function App() {
 						<div className="flex items-center flex-col mt-4">
 							<div className="h-10 w-full rounded-full bg-background py-2 text-sm placeholder:text-muted-foreground flex items-center mt-4">
 								<Select onValueChange={onTabChange} value={tab}>
-									<SelectTrigger className="w-[180px] bg-transparent border-y-0 border-l-0 border-r-input rounded-l-full">
+									<SelectTrigger className="w-[100px] bg-transparent border-y-0 border-l-0 border-r-input rounded-l-full focus:ring-0 focus:ring-offset-0	">
 										<SelectValue />
 									</SelectTrigger>
 									<SelectContent>
@@ -82,18 +88,21 @@ function App() {
 										</SelectGroup>
 									</SelectContent>
 								</Select>
-								<Input
-									type="search"
-									placeholder="Search"
-									onChange={(event) => setLocation(event.target.value)}
-									className="rounded-full border-none bg-transparent focus-visible:ring-0 focus-visible:ring-ring focus-visible:ring-offset-0 "
-								/>
-								<Button
-									className="rounded-r-full rounded-l-none"
-									onClick={() => refetch()}
-								>
-									Search
-								</Button>
+								<form className="flex flex-auto" onSubmit={() => refetch()}>
+									<Input
+										type="search"
+										placeholder="Search"
+										onChange={locationChangeHandler}
+										value={location}
+										className="rounded-full border-none bg-transparent focus-visible:ring-0 focus-visible:ring-ring focus-visible:ring-offset-0 "
+									/>
+									<Button
+										className="rounded-r-full rounded-l-none"
+										type="submit"
+									>
+										Search
+									</Button>
+								</form>
 							</div>
 						</div>
 					</div>
