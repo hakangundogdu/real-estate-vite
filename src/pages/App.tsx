@@ -42,6 +42,13 @@ function App() {
 		refetch();
 	}, []);
 
+	
+	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+			event.preventDefault();
+			refetch()
+	}
+
+
 	console.log("properties", properties);
 	console.log("isLoading", isLoading);
 	console.log("isFetching", isFetching);
@@ -88,7 +95,7 @@ function App() {
 										</SelectGroup>
 									</SelectContent>
 								</Select>
-								<form className="flex flex-auto" onSubmit={() => refetch()}>
+								<form className="flex flex-auto" onSubmit={handleSubmit}>
 									<Input
 										type="search"
 										placeholder="Search"
