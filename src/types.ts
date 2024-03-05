@@ -5,7 +5,7 @@ export interface IProperty {
 	id: string;
 	image_354_255_url: string;
 	image_645_430_url: string;
-	images: string[];
+	images: Images[];
 	latitude: number;
 	listing_status: string;
 	longitude: number;
@@ -14,4 +14,18 @@ export interface IProperty {
 	price: string;
 	thumbnail_url: string;
 	title: string;
+}
+
+interface Images {
+	"50x38": string;
+	"80x60": string;
+	"150x113": string;
+	"240x180": string;
+	"354x255": string;
+	"480x360": string;
+	"645x430": string;
+	"768x576": string;
+	"1024x768": string;
+	caption: string;
+	original: string;
 }

@@ -15,10 +15,7 @@ import About from "@/pages/About";
 import { Signin } from "@/pages/SignIn";
 import { AuthProvider } from "@/context/authContext";
 import PropertyDetail from "@/pages/PropertyDetail";
-
-const Loading = () => (
-	<p className="p-4 w-full h-full text-center">Loading...</p>
-);
+import { LoadingSpinner } from "@/components/ui/loading";
 
 const App = lazy(() => import("../pages/App"));
 const NotFound = lazy(() => import("../pages/NotFound"));
@@ -64,7 +61,7 @@ const InnerRouter = () => {
 	return (
 		<AuthProvider>
 			<div className="w-full">
-				<Suspense fallback={<Loading />}>{element}</Suspense>
+				<Suspense fallback={<LoadingSpinner />}>{element}</Suspense>
 			</div>
 		</AuthProvider>
 	);

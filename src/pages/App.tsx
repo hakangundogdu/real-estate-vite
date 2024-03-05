@@ -1,7 +1,5 @@
 import "../App.css";
-import { CgSpinner } from "react-icons/cg";
 import { FormEvent, useEffect, useState } from "react";
-
 import PropertyList from "@/components/PropertyList";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,6 +13,7 @@ import {
 } from "@/components/ui/select";
 import { getProperties } from "@/api/api";
 import { useQuery } from "@tanstack/react-query";
+import { LoadingSpinner } from "@/components/ui/loading";
 
 function App() {
 	const [tab, setTab] = useState("sale");
@@ -42,17 +41,10 @@ function App() {
 		refetch();
 	}, []);
 
-	
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-			event.preventDefault();
-			refetch()
-	}
-
-
-	console.log("properties", properties);
-	console.log("isLoading", isLoading);
-	console.log("isFetching", isFetching);
-	console.log("location", location);
+		event.preventDefault();
+		refetch();
+	};
 
 	const locationChangeHandler = (
 		event: React.ChangeEvent<HTMLInputElement>
@@ -115,11 +107,7 @@ function App() {
 					</div>
 				</div>
 			</div>
-			{isFetching && (
-				<div className="h-48 m-auto flex items-center">
-					<CgSpinner className="animate-spin m-auto text-primary text-5xl" />
-				</div>
-			)}
+			{isLoading && <LoadingSpinner />}
 			{!isFetching && properties && <PropertyList properties={properties} />}
 		</div>
 	);
