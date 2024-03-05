@@ -15,13 +15,14 @@ import { useContext, useEffect, useState } from "react";
 import AuthContext from "@/context/authContext";
 import { db, colRef } from "../firebase";
 import { addDoc, doc, updateDoc } from "@firebase/firestore";
-import { LoadingSpinner } from "@/components/ui/loading";
 import PropertySkeleton from "@/components/ui/PropertySkeleton";
+import { LoginAlertDialog } from "@/components/ui/login-modal";
 
 const PropertyDetail = () => {
 	const { id } = useParams();
 	const { user, userData } = useContext(AuthContext);
 	const [saved, setSaved] = useState(false);
+	const [isOpen, setIsOpen] = useState(false);
 	const docRef = doc(db, "users", `${userData?.id}`);
 	const userId = user?.uid;
 	const savedIds = userData?.savedIds;
@@ -52,18 +53,22 @@ const PropertyDetail = () => {
 		);
 
 	const saveHandler = (id: string) => {
-		const newList = [...savedIds, id];
-
-		if (savedIds.length === 0) {
-			addDoc(colRef, {
-				uid: userId,
-				saved: newList,
-			});
+		if (!userId) {
+			setIsOpen(true);
 		} else {
-			updateDoc(docRef, {
-				uid: userId,
-				saved: newList,
-			});
+			const newList = [...savedIds, id];
+
+			if (savedIds.length === 0) {
+				addDoc(colRef, {
+					uid: userId,
+					saved: newList,
+				});
+			} else {
+				updateDoc(docRef, {
+					uid: userId,
+					saved: newList,
+				});
+			}
 		}
 	};
 
@@ -139,12 +144,7 @@ const PropertyDetail = () => {
 								{!saved ? (
 									<Button
 										className="text-white text-md"
-										onClick={
-											// userId
-											//   ? () => saveHandler({ id: property.id })
-											//   : popUpHandler
-											() => saveHandler(id!)
-										}
+										onClick={() => saveHandler(id!)}
 									>
 										<BiHeart className="size-5 mr-2 text-white" />
 										Save
@@ -171,6 +171,7 @@ const PropertyDetail = () => {
 			) : (
 				<PropertySkeleton />
 			)}
+			{isOpen && <LoginAlertDialog />}
 		</>
 	);
 };
