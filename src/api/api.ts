@@ -1,28 +1,13 @@
 import { IProperty } from "@/types";
-import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-const baseURL = "https://adventurous-hem-tuna.cyclic.app/listings";
 
+const baseURL = "https://adventurous-hem-tuna.cyclic.app/listings";
 export interface IQueryProps {
 	county: string | null;
 	listing_status: string | null;
 	_limit: number | null;
 }
 
-// export const getProperties = async () => {
-// 	const params = {
-// 		county: "London",
-// 		listing_status: "sale",
-// 		_limit: 12,
-// 	};
-// 	const res = await axios({
-// 		method: "GET",
-// 		url: baseURL,
-// 		params,
-// 	});
-
-// 	return res.data;
-// };
 export const getProperties = async (
 	props: IQueryProps
 ): Promise<IProperty[]> => {
@@ -45,19 +30,14 @@ export const getProperty = async (id: string): Promise<IProperty> => {
 	return res.data;
 };
 
-// export const getProperties = ({ _limit }: { _limit: IQueryProps["_limit"] }) =>
-// 	useQuery({
-// 		queryKey: ["getProperties", _limit],
-// 		queryFn: async (): Promise<IProperty[]> => {
-// 			const res = await axios({
-// 				method: "GET",
-// 				url: baseURL,
-// 				params: { _limit },
-// 			});
-
-// 			return res.data;
-// 		},
-// 	});
+export const getPropertiesById = async (
+	savedIds: string[]
+): Promise<IProperty[]> => {
+	const idQuery = savedIds.map((id) => `id=${id}`).join("&");
+	const url = `${baseURL}?${idQuery}`;
+	const res = await axios(url);
+	return res.data;
+};
 
 // export const fetchNoLocation = async (props) => {
 // 	const params = {
@@ -70,16 +50,4 @@ export const getProperty = async (id: string): Promise<IProperty> => {
 // 		params,
 // 	});
 // 	return data;
-// };
-
-// export const fetchSingleProperty = async (props) => {
-// 	const response = await axios(`${baseURL}/${props.id}`);
-// 	return response;
-// };
-
-// export const fetchMultipleProperty = async ({ savedIds }) => {
-// 	const idQuery = savedIds.map((id) => `id=${id}`).join("&");
-// 	const url = `${baseURL}?${idQuery}`;
-// 	const response = await axios(url);
-// 	return response;
 // };

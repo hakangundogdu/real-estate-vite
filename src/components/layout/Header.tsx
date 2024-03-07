@@ -51,12 +51,15 @@ const Header = () => {
 				</div>
 			) : (
 				<div className="flex items-center gap-4">
-					<Button
-						className="bg-secondary text-primary rounded-full hover:text-white"
-						size="icon"
-					>
-						<HeartIcon className="size-6" />
-					</Button>
+					<Link to="/saved">
+						<Button
+							className="bg-secondary text-primary rounded-full hover:text-white"
+							size="icon"
+						>
+							<HeartIcon className="size-6" />
+						</Button>
+					</Link>
+
 					<UserNav />
 				</div>
 			)}

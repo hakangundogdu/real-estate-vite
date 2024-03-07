@@ -16,6 +16,7 @@ import { Signin } from "@/pages/SignIn";
 import { AuthProvider } from "@/context/authContext";
 import PropertyDetail from "@/pages/PropertyDetail";
 import { LoadingSpinner } from "@/components/ui/loading";
+import Saved from "@/pages/Saved";
 
 const App = lazy(() => import("../pages/App"));
 const NotFound = lazy(() => import("../pages/NotFound"));
@@ -37,6 +38,10 @@ const InnerRouter = () => {
 				{
 					index: true,
 					element: <App />,
+				},
+				{
+					path: "/saved",
+					element: <Saved />,
 				},
 				{
 					path: "/about",
