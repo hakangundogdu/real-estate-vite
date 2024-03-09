@@ -10,20 +10,12 @@ import {
 	onAuthStateChanged,
 } from "firebase/auth";
 import { auth, colRef } from "../firebase";
-import {
-	doc,
-	DocumentData,
-	onSnapshot,
-	serverTimestamp,
-	setDoc,
-	query,
-	where,
-} from "firebase/firestore";
+import { DocumentData, onSnapshot, query, where } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 
 export type AuthContextType = {
 	user: User | null;
-	signInWithGoogle: () => Promise<UserCredential>;
+	signInWithGoogle: () => void;
 	createUser: (email: string, password: string) => Promise<UserCredential>;
 	signIn: (email: string, password: string) => Promise<UserCredential>;
 	logOut: () => Promise<void>;
