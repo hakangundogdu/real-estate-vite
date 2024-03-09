@@ -1,5 +1,5 @@
 import "../App.css";
-import { FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import PropertyList from "@/components/PropertyList";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

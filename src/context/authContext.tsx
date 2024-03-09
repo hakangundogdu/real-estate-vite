@@ -1,10 +1,4 @@
-import {
-	PropsWithChildren,
-	createContext,
-	useContext,
-	useEffect,
-	useState,
-} from 'react';
+import { PropsWithChildren, createContext, useEffect, useState } from "react";
 import {
 	createUserWithEmailAndPassword,
 	signInWithEmailAndPassword,
@@ -14,8 +8,8 @@ import {
 	UserCredential,
 	signOut,
 	onAuthStateChanged,
-} from 'firebase/auth';
-import { auth, colRef, db } from '../firebase';
+} from "firebase/auth";
+import { auth, colRef } from "../firebase";
 import {
 	doc,
 	DocumentData,
@@ -24,8 +18,8 @@ import {
 	setDoc,
 	query,
 	where,
-} from 'firebase/firestore';
-import { useNavigate } from 'react-router-dom';
+} from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 export type AuthContextType = {
 	user: User | null;
@@ -35,6 +29,7 @@ export type AuthContextType = {
 	logOut: () => Promise<void>;
 	userData: DocumentData | undefined;
 };
+type createUser = (email: string, password: string) => Promise<UserCredential>;
 
 const AuthContext = createContext({} as AuthContextType);
 
@@ -48,14 +43,14 @@ export const AuthProvider = ({ children }: PropsWithChildren<unknown>) => {
 	// Sign in with Google
 	const signInWithGoogle = () => {
 		signInWithPopup(auth, provider);
-		navigate('/');
+		navigate("/");
 	};
 
-	const createUser = (email, password) => {
+	const createUser: createUser = (email, password) => {
 		return createUserWithEmailAndPassword(auth, email, password);
 	};
 
-	const signIn = (email, password) => {
+	const signIn: createUser = (email, password) => {
 		return signInWithEmailAndPassword(auth, email, password);
 	};
 
@@ -90,10 +85,10 @@ export const AuthProvider = ({ children }: PropsWithChildren<unknown>) => {
 
 	useEffect(() => {
 		if (!user) return;
-		const q = query(colRef, where('uid', '==', user.uid));
+		const q = query(colRef, where("uid", "==", user.uid));
 
 		onSnapshot(q, (snapshot) => {
-			let data = [];
+			let data: any = [];
 			snapshot.forEach((doc) => {
 				data.push({ ...doc.data(), id: doc.id });
 			});

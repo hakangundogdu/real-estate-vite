@@ -1,7 +1,3 @@
-import { Link } from 'react-router-dom';
-
-import { Button } from '@/components/ui/button';
-
 const Footer: React.FC = () => {
 	return (
 		<div className="border-t border-t-slate-200">

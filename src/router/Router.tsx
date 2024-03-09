@@ -1,16 +1,7 @@
-import { HomeIcon } from "@heroicons/react/24/solid";
-import { SignalIcon } from "lucide-react";
 import { lazy, Suspense } from "react";
-import {
-	BrowserRouter,
-	Link,
-	Outlet,
-	RouteObject,
-	useRoutes,
-} from "react-router-dom";
+import { BrowserRouter, RouteObject, useRoutes } from "react-router-dom";
 
 import Layout from "@/components/layout/Layout";
-import { Button } from "@/components/ui/button";
 import About from "@/pages/About";
 import { Signin } from "@/pages/SignIn";
 import { AuthProvider } from "@/context/authContext";

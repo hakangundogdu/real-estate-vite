@@ -107,7 +107,7 @@ const PropertyDetail = () => {
 							</div>
 							<div className="absolute bottom-4 right-0 left-0">
 								<div className="flex items-center justify-center gap-2">
-									{property?.images.map((s, i) => (
+									{property?.images.map((img, i) => (
 										<div
 											key={i}
 											className={`transition-all w-1.5 h-1.5 bg-white rounded-full  ${

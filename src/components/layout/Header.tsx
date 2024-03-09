@@ -1,29 +1,14 @@
 import { HomeIcon } from "@heroicons/react/24/solid";
 import { HeartIcon } from "@heroicons/react/24/outline";
-
 import { Link } from "react-router-dom";
-
 import { Button } from "../ui/button";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useContext, useEffect } from "react";
 import AuthContext from "@/context/authContext";
-import { auth, colRef, db } from "../../firebase";
-import {
-	doc,
-	DocumentData,
-	onSnapshot,
-	serverTimestamp,
-	setDoc,
-	query,
-	where,
-} from "firebase/firestore";
 import { UserNav } from "./UserNav";
 
 const Header = () => {
-	const { user, userData } = useContext(AuthContext);
-
-	console.log("user-context", user);
-	console.log("userdata-context", userData);
+	const { user } = useContext(AuthContext);
 
 	useEffect(() => {
 		const auth = getAuth();
