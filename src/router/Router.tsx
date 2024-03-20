@@ -4,6 +4,7 @@ import { BrowserRouter, RouteObject, useRoutes } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import About from "@/pages/About";
 import { Signin } from "@/pages/SignIn";
+import { Signup } from "@/pages/SignUp";
 import { AuthProvider } from "@/context/authContext";
 import PropertyDetail from "@/pages/PropertyDetail";
 import { LoadingSpinner } from "@/components/ui/loading";
@@ -45,6 +46,10 @@ const InnerRouter = () => {
 				{
 					path: "/login",
 					element: <Signin />,
+				},
+				{
+					path: "/signup",
+					element: <Signup />,
 				},
 				{
 					path: "*",

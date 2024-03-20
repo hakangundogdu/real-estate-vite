@@ -7,7 +7,6 @@ import {
 	Card,
 	CardContent,
 	CardDescription,
-	CardFooter,
 	CardHeader,
 	CardTitle,
 } from "@/components/ui/card";
@@ -17,7 +16,7 @@ import { useContext } from "react";
 import AuthContext from "@/context/authContext";
 import { Link, useNavigate } from "react-router-dom";
 
-export function Signin() {
+export function Signup() {
 	const { signInWithGoogle, signIn, user, userData } = useContext(AuthContext);
 	const navigate = useNavigate();
 
@@ -39,7 +38,7 @@ export function Signin() {
 		<div className="flex-auto flex text-left items-center justify-center">
 			<Card className="w-96">
 				<CardHeader className="space-y-1">
-					<CardTitle className="text-2xl">Login</CardTitle>
+					<CardTitle className="text-2xl">Signup</CardTitle>
 				</CardHeader>
 				<CardContent className="grid gap-4">
 					<Button variant="outline" onClick={signInWithGoogle}>
@@ -57,6 +56,16 @@ export function Signin() {
 						</div>
 					</div>
 					<form className="grid gap-4" onSubmit={handleSubmit}>
+						<div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+							<div className="sm:col-span-3 grid gap-2">
+								<Label htmlFor="firstname">First Name</Label>
+								<Input id="firstname" type="firstname" />
+							</div>
+							<div className="sm:col-span-3 grid gap-2">
+								<Label htmlFor="lastname">Last Name</Label>
+								<Input id="lastname" type="lastname" />
+							</div>
+						</div>
 						<div className="grid gap-2">
 							<Label htmlFor="email">Email</Label>
 							<Input id="email" type="email" placeholder="m@example.com" />
