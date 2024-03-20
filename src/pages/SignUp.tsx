@@ -3,13 +3,7 @@
 import { FcGoogle } from "react-icons/fc";
 
 import { Button } from "@/components/ui/button";
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardHeader,
-	CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useContext } from "react";
@@ -17,17 +11,18 @@ import AuthContext from "@/context/authContext";
 import { Link, useNavigate } from "react-router-dom";
 
 export function Signup() {
-	const { signInWithGoogle, signIn, user, userData } = useContext(AuthContext);
+	const { signInWithGoogle, signIn } = useContext(AuthContext);
 	const navigate = useNavigate();
 
-	console.log("user", user);
-	console.log("userData", userData);
-
-	const handleSubmit = (event) => {
+	const handleSubmit = (event: React.SyntheticEvent<HTMLFormElement>) => {
 		event.preventDefault();
-		console.log(event);
+		const form = event.currentTarget;
+		const formElements = form.elements as typeof form.elements & {
+			email: { value: string };
+			password: { value: string };
+		};
 		try {
-			signIn(event.target.email.value, event.target.password.value);
+			signIn(formElements.email.value, formElements.password.value);
 		} catch (error) {
 			console.log("error", error);
 		}
