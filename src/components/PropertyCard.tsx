@@ -1,6 +1,3 @@
-import { HeartIcon as HeartOutline } from "@heroicons/react/24/outline";
-import { HeartIcon } from "@heroicons/react/24/solid";
-import * as React from "react";
 import { BiBath, BiBed } from "react-icons/bi";
 import { millify } from "millify";
 
@@ -15,9 +12,6 @@ import { IProperty } from "@/types";
 import { Link } from "react-router-dom";
 
 const PropertyCard = ({ property }: { property: IProperty }) => {
-	const [saved, setSaved] = React.useState(false);
-	console.log("saved", saved);
-
 	return (
 		<Card className="relative text-left overflow-hidden">
 			<div className="h-48 overflow-hidden">
@@ -37,16 +31,6 @@ const PropertyCard = ({ property }: { property: IProperty }) => {
 							: property.title}
 					</p>
 				</Link>
-				<button
-					className="absolute top-6 right-6 !mt-0"
-					onClick={() => setSaved(!saved)}
-				>
-					{saved ? (
-						<HeartIcon className="w-6 h-6 text-destructive" />
-					) : (
-						<HeartOutline className="w-6 h-6 text-destructive" />
-					)}
-				</button>
 			</CardHeader>
 			<CardContent>
 				<p className="text-sm text-muted-foreground">
