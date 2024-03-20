@@ -10,7 +10,11 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Link } from "react-router-dom";
 
-export function LoginAlertDialog() {
+type LoginProps = {
+	onClose: () => void;
+};
+
+export function LoginAlertDialog(props: LoginProps) {
 	return (
 		<AlertDialog open={true}>
 			<AlertDialogContent>
@@ -21,7 +25,7 @@ export function LoginAlertDialog() {
 					</AlertDialogDescription>
 				</AlertDialogHeader>
 				<AlertDialogFooter>
-					<AlertDialogCancel>Cancel</AlertDialogCancel>
+					<AlertDialogCancel onClick={props.onClose}>Cancel</AlertDialogCancel>
 					<Link to="/login">
 						<AlertDialogAction>Login</AlertDialogAction>
 					</Link>

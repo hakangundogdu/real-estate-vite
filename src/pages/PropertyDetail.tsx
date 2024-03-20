@@ -78,6 +78,8 @@ const PropertyDetail = () => {
 		});
 	};
 
+	const closeHandler = () => setIsOpen(false);
+
 	return (
 		<>
 			{property ? (
@@ -179,7 +181,7 @@ const PropertyDetail = () => {
 			) : (
 				<PropertySkeleton />
 			)}
-			{isOpen && <LoginAlertDialog />}
+			{isOpen && <LoginAlertDialog onClose={closeHandler} />}
 		</>
 	);
 };

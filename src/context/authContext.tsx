@@ -51,7 +51,6 @@ export const AuthProvider = ({ children }: PropsWithChildren<unknown>) => {
 
 	useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-			console.log(currentUser);
 			setUser(currentUser);
 			// 	if (currentUser) {
 			// 		onSnapshot(doc(db, 'users', currentUser.uid), (snapshot) => {

@@ -2,22 +2,12 @@ import { HomeIcon } from "@heroicons/react/24/solid";
 import { HeartIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import AuthContext from "@/context/authContext";
 import { UserNav } from "./UserNav";
 
 const Header = () => {
 	const { user } = useContext(AuthContext);
-
-	useEffect(() => {
-		const auth = getAuth();
-
-		onAuthStateChanged(auth, (user) => {
-			console.log("currentuser", auth.currentUser);
-			console.log("currentuserrr", user);
-		});
-	}, []);
 
 	return (
 		<nav className="container px-8 py-2 flex items-center justify-between">
