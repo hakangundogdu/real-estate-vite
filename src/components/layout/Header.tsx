@@ -30,7 +30,7 @@ const Header = () => {
 			{!user ? (
 				<div className="flex items-center gap-4">
 					<Link to="/login">Login</Link>
-					<Link to="/login">
+					<Link to="/signup">
 						<Button>Sign Up</Button>
 					</Link>
 				</div>
