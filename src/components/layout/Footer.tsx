@@ -10,7 +10,7 @@ const Footer: React.FC = () => {
 						</a>
 						All Rights Reserved.
 					</span>
-					<ul className="flex flex-wrap items-center mt-3 text-sm font-medium sm:mt-0">
+					<ul className="hidden md:flex flex-wrap items-center mt-3 text-sm font-medium sm:mt-0">
 						<li>
 							<a href="/" className="hover:underline me-4 md:me-6">
 								About

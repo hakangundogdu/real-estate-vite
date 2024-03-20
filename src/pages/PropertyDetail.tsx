@@ -85,8 +85,8 @@ const PropertyDetail = () => {
 			{property ? (
 				<>
 					<div className="flex-auto container px-8 py-6">
-						<div className="grid gap-4 md:grid-cols-2 h-96">
-							<div className="flex w-full bg-center bg-cover h-96 overflow-hidden rounded-xl relative">
+						<div className="flex flex-col md:flex-row md:h-96">
+							<div className="flex w-full md:w-1/2 bg-center bg-cover h-96 overflow-hidden rounded-xl relative">
 								<img
 									className="w-full h-96 object-cover"
 									src={property?.images[currentImage]["645x430"]}
@@ -121,7 +121,7 @@ const PropertyDetail = () => {
 									</div>
 								</div>
 							</div>
-							<div className="flex flex-col justify-center ml-6 p-4">
+							<div className="flex flex-col justify-center md:ml-6 p-4">
 								<p className="text-3xl font-bold">
 									£{millify(+property?.price)}
 								</p>
