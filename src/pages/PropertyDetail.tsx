@@ -108,14 +108,19 @@ const PropertyDetail = () => {
 								</div>
 								<div className="absolute bottom-4 right-0 left-0">
 									<div className="flex items-center justify-center gap-2">
-										{property?.images.map((img, i) => (
-											<div
-												key={i}
-												className={`transition-all w-1.5 h-1.5 bg-white rounded-full  ${
-													currentImage === i ? "p-0.5" : "bg-opacity-50"
-												}`}
-											/>
-										))}
+										{property?.images.map(
+											(img, i) => (
+												console.log("img", img),
+												(
+													<div
+														key={i}
+														className={`transition-all w-1.5 h-1.5 bg-white rounded-full  ${
+															currentImage === i ? "p-0.5" : "bg-opacity-50"
+														}`}
+													/>
+												)
+											)
+										)}
 									</div>
 								</div>
 							</div>
