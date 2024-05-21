@@ -1,7 +1,7 @@
 import { IProperty } from "@/types";
 import axios from "axios";
 
-const baseURL = "https://adventurous-hem-tuna.cyclic.app/listings";
+const baseURL = "https://property-api-35.onrender.com/listings";
 export interface IQueryProps {
 	county: string | null;
 	listing_status: string | null;
