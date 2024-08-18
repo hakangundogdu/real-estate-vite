@@ -23,7 +23,7 @@ import {
 import { getProperties } from "@/api/api";
 import { useQuery } from "@tanstack/react-query";
 import { LoadingSpinner } from "@/components/ui/loading";
-import { redirect, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function App() {
 	const [tab, setTab] = useState("sale");
@@ -47,6 +47,7 @@ function App() {
 				county: location.length > 0 ? location : null,
 				listing_status: tab,
 				limit: location.length === 0 ? 12 : null,
+				sort: true,
 			}),
 		enabled: false,
 	});
