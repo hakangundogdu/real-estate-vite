@@ -23,11 +23,13 @@ import {
 import { getProperties } from "@/api/api";
 import { useQuery } from "@tanstack/react-query";
 import { LoadingSpinner } from "@/components/ui/loading";
+import { redirect, useNavigate } from "react-router-dom";
 
 function App() {
 	const [tab, setTab] = useState("sale");
 	const [location, setLocation] = useState("");
 	const [isOpen, setIsOpen] = useState(false);
+	const navigate = useNavigate();
 
 	const acceptedLocation = ["london", "manchester", "oxford"].includes(
 		location.toLowerCase()
@@ -56,8 +58,8 @@ function App() {
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		if (!acceptedLocation) setIsOpen(true);
-
-		refetch();
+		navigate(`/search/${tab}/${location}`);
+		// refetch();
 	};
 
 	const locationChangeHandler = (

@@ -1,20 +1,21 @@
 #root {
-  /* max-width: 1280px; */
-  /* margin: 0 auto;
+	/* max-width: 1280px; */
+	/* margin: 0 auto;
   padding: 0.5rem; */
-  text-align: center;
+	text-align: center;
+	overflow: scroll;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+	a:nth-of-type(2) .logo {
+		animation: logo-spin infinite 20s linear;
+	}
 }
 
 .card {
-  padding: 2em;
+	padding: 2em;
 }
 
 .read-the-docs {
-  color: #888;
+	color: #888;
 }

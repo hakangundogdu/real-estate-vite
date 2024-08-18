@@ -124,7 +124,7 @@ const PropertyDetail = () => {
 									</div>
 								</div>
 							</div>
-							<div className="flex flex-col justify-center md:ml-6 p-4">
+							<div className="flex flex-col justify-center text-left md:ml-6 p-4">
 								<p className="text-3xl font-bold">
 									£{millify(+property?.price)}
 								</p>

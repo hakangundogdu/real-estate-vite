@@ -2,9 +2,10 @@ import { IProperty } from "@/types";
 import { supabase } from "../utils/supabase";
 
 export interface IQueryProps {
-	county: string | null;
-	listing_status: string | null;
-	limit: number | null;
+	county: string | null | undefined;
+	listing_status: string | null | undefined;
+	limit: number | null | undefined;
+	sort: boolean;
 }
 
 export const getProperties = async (
@@ -14,13 +15,15 @@ export const getProperties = async (
 		county: props.county,
 		listing_status: props.listing_status,
 		limit: props.county ? null : 12,
+		sort: props.sort,
 	};
 
 	let query = supabase
 		.from("listings")
 		.select("*")
 		.ilike("city", params.county || "london")
-		.eq("status", props.listing_status);
+		.eq("status", props.listing_status)
+		.order("price", { ascending: props.sort });
 
 	if (!params.county) {
 		query = query.limit(12);
