@@ -1,6 +1,5 @@
 import { coordinates } from "@/lib/coordinates";
 import { IProperty } from "@/types";
-import { BiMapAlt } from "react-icons/bi";
 
 import {
 	AdvancedMarker,
