@@ -4,6 +4,16 @@ import PropertyList from "@/components/PropertyList";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import {
 	Select,
 	SelectContent,
 	SelectGroup,
@@ -18,6 +28,11 @@ import { LoadingSpinner } from "@/components/ui/loading";
 function App() {
 	const [tab, setTab] = useState("sale");
 	const [location, setLocation] = useState("");
+	const [isOpen, setIsOpen] = useState(false);
+
+	const acceptedLocation = ["london", "manchester", "oxford"].includes(
+		location.toLowerCase()
+	);
 
 	const {
 		data: properties,
@@ -41,6 +56,8 @@ function App() {
 
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
+		if (!acceptedLocation) setIsOpen(true);
+
 		refetch();
 	};
 
@@ -88,7 +105,7 @@ function App() {
 								<form className="flex flex-auto" onSubmit={handleSubmit}>
 									<Input
 										type="search"
-										placeholder="Search"
+										placeholder="London, Manchester or Oxford only"
 										onChange={locationChangeHandler}
 										value={location}
 										className="rounded-full border-none bg-transparent focus-visible:ring-0 focus-visible:ring-ring focus-visible:ring-offset-0 "
@@ -124,6 +141,24 @@ function App() {
 					</div>
 					<PropertyList properties={properties} />
 				</>
+			)}
+
+			{isOpen && (
+				<AlertDialog open={true}>
+					<AlertDialogContent>
+						<AlertDialogHeader>
+							<AlertDialogTitle>Test Mode!</AlertDialogTitle>
+							<AlertDialogDescription>
+								Please search "London", "Oxford" or "Manchester".
+							</AlertDialogDescription>
+						</AlertDialogHeader>
+						<AlertDialogFooter>
+							<AlertDialogAction onClick={() => setIsOpen(false)}>
+								Ok
+							</AlertDialogAction>
+						</AlertDialogFooter>
+					</AlertDialogContent>
+				</AlertDialog>
 			)}
 		</div>
 	);
