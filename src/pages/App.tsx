@@ -123,24 +123,7 @@ function App() {
 			</div>
 
 			{isLoading && <LoadingSpinner />}
-
-			{!isFetching && properties && (
-				<>
-					<div className="container text-left">
-						<p className="ml-2 mt-4 -mb-4">
-							{properties?.length === 0
-								? "No properties found."
-								: `${
-										properties[0].city.charAt(0).toUpperCase() +
-										properties[0].city.substring(1)
-									} - ${
-										properties[0].status === "sale" ? "For Sale" : "To Rent"
-									} - ${properties?.length} Properties`}
-						</p>
-					</div>
-					<PropertyList properties={properties} />
-				</>
-			)}
+			{!isFetching && properties && <PropertyList properties={properties} />}
 
 			{isOpen && (
 				<AlertDialog open={true}>
