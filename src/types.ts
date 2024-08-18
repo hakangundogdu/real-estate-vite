@@ -1,5 +1,5 @@
 export interface IProperty {
-	county: string;
+	city: string;
 	description: string;
 	displayable_address: string;
 	id: string;
@@ -7,7 +7,7 @@ export interface IProperty {
 	image_645_430_url: string;
 	images: Images[];
 	latitude: number;
-	listing_status: string;
+	status: string;
 	longitude: number;
 	num_bathrooms: string;
 	num_bedrooms: string;
