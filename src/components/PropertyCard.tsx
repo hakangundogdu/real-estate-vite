@@ -11,28 +11,18 @@ import {
 
 import { Link } from "react-router-dom";
 import ImageSkeleton from "./ui/ImageSkeleton";
-import { useState } from "react";
 
 const PropertyCard = ({ property }: { property: any }) => {
-	const [imageError, setImageError] = useState(false);
-
-	!property.image && console.log("property", property.image);
-
-	const handleImageError = () => {
-		setImageError(true);
-	};
-
 	return (
 		<Card className="relative text-left overflow-hidden">
 			<div className="h-48 overflow-hidden">
-				{imageError ? (
+				{!property.image ? (
 					<ImageSkeleton />
 				) : (
 					<img
 						className="w-full h-48 object-cover hover:scale-105 transition-all duration-300 ease-in-out"
 						src={property.image}
 						alt="image of house"
-						onError={handleImageError}
 					/>
 				)}
 			</div>
