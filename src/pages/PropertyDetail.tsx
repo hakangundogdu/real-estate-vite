@@ -13,7 +13,7 @@ import { useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useContext, useEffect, useState } from "react";
 import AuthContext from "@/context/authContext";
-import { db, colRef } from "../firebase";
+import { db, colRef } from "../utils/firebase";
 import { addDoc, doc, updateDoc } from "@firebase/firestore";
 import PropertySkeleton from "@/components/ui/PropertySkeleton";
 import { LoginAlertDialog } from "@/components/ui/login-modal";
@@ -29,10 +29,15 @@ const PropertyDetail = () => {
 	const savedIds = userData?.savedIds;
 	const [currentImage, setCurrentImage] = useState(0);
 
-	const { data: property } = useQuery({
+	const { data: propertyData } = useQuery({
 		queryKey: ["getProperties", id],
 		queryFn: () => getProperty(id!),
 	});
+
+	const property = propertyData?.listing;
+	const images = propertyData?.images;
+
+	console.log("propertyData", propertyData);
 
 	useEffect(() => {
 		if (userData) {
@@ -42,12 +47,12 @@ const PropertyDetail = () => {
 
 	const prev = () =>
 		setCurrentImage((currentImage) =>
-			currentImage === 0 ? property!.images.length - 1 : currentImage - 1
+			currentImage === 0 ? images.length - 1 : currentImage - 1
 		);
 
 	const next = () =>
 		setCurrentImage((currentImage) =>
-			currentImage === property!.images.length - 1 ? 0 : currentImage + 1
+			currentImage === images.length - 1 ? 0 : currentImage + 1
 		);
 
 	const saveHandler = (id: string) => {
@@ -89,7 +94,7 @@ const PropertyDetail = () => {
 							<div className="flex w-full md:w-1/2 bg-center bg-cover h-96 overflow-hidden rounded-xl relative">
 								<img
 									className="w-full h-96 object-cover"
-									src={property?.images[currentImage]["645x430"]}
+									src={images[currentImage].image}
 									alt="image of house"
 								/>
 								<div className="absolute inset-0 flex items-center justify-between p-4">
@@ -108,16 +113,14 @@ const PropertyDetail = () => {
 								</div>
 								<div className="absolute bottom-4 right-0 left-0">
 									<div className="flex items-center justify-center gap-2">
-										{Array.from(Array(property?.images.length).keys()).map(
-											(i) => (
-												<div
-													key={i}
-													className={`transition-all w-1.5 h-1.5 bg-white rounded-full  ${
-														currentImage === i ? "p-0.5" : "bg-opacity-50"
-													}`}
-												/>
-											)
-										)}
+										{Array.from(Array(images.length).keys()).map((i) => (
+											<div
+												key={i}
+												className={`transition-all w-1.5 h-1.5 bg-white rounded-full  ${
+													currentImage === i ? "p-0.5" : "bg-opacity-50"
+												}`}
+											/>
+										))}
 									</div>
 								</div>
 							</div>
@@ -129,20 +132,20 @@ const PropertyDetail = () => {
 									{property?.title}
 								</p>
 								<p className="text-lg text-muted-foreground mt-6">
-									{property?.displayable_address}
+									{property?.address}
 								</p>
-								<p className="text-sm text-muted-foreground mt-2">
-									{property?.county}
+								<p className="text-lg text-muted-foreground mt-2">
+									{property.city[0].toUpperCase() + property.city.slice(1)}
 								</p>
 
 								<div className="flex mt-6">
 									<BiBed className="size-6 text-primary" />
 									<p className="text text-muted-foreground ml-2 mr-4">
-										{property?.num_bedrooms}
+										{property?.bedrooms}
 									</p>
 									<BiBath className="size-6 text-primary" />
 									<p className="text text-muted-foreground ml-2">
-										{property?.num_bathrooms}
+										{property?.bathrooms}
 									</p>
 								</div>
 								<div className="flex gap-4 mt-6">

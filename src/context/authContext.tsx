@@ -9,7 +9,7 @@ import {
 	signOut,
 	onAuthStateChanged,
 } from "firebase/auth";
-import { auth, colRef } from "../firebase";
+import { auth, colRef } from "../utils/firebase";
 import { DocumentData, onSnapshot, query, where } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 

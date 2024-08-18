@@ -14,12 +14,27 @@ import {
 import { getProperties } from "@/api/api";
 import { useQuery } from "@tanstack/react-query";
 import { LoadingSpinner } from "@/components/ui/loading";
+import { supabase } from "../utils/supabase";
 
 function App() {
 	const [tab, setTab] = useState("sale");
 	const [location, setLocation] = useState("");
+	const [listings, setListings] = useState<any>([]);
 
-	// const { data: properties, isLoading } = getProperties({ _limit: 12 });
+	async function getListings() {
+		const { data, error } = await supabase
+			.from("listings")
+			.select("*")
+			.eq("city", location.toLowerCase())
+			.eq("status", tab);
+
+		if (error) {
+			console.error("Error fetching data:", error);
+		} else {
+			console.log("supabase data:", data);
+			setListings(data);
+		}
+	}
 
 	const {
 		data: properties,
@@ -32,7 +47,7 @@ function App() {
 			getProperties({
 				county: location.length > 0 ? location : null,
 				listing_status: tab,
-				_limit: location.length === 0 ? 12 : null,
+				limit: location.length === 0 ? 12 : null,
 			}),
 		enabled: false,
 	});
@@ -44,6 +59,7 @@ function App() {
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		refetch();
+		// getListings();
 	};
 
 	const locationChangeHandler = (
@@ -107,6 +123,7 @@ function App() {
 					</div>
 				</div>
 			</div>
+
 			{isLoading && <LoadingSpinner />}
 			{!isFetching && properties && <PropertyList properties={properties} />}
 		</div>
