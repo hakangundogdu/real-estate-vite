@@ -1,30 +1,31 @@
-# React + TypeScript + Vite
+# DREAM HOME - Real Estate Search Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
 
-Currently, two official plugins are available:
+This Real Estate Search Application is a modern, responsive web application built with the following technologies:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **React**: JavaScript library for building user interfaces
+- **Vite**: Next-generation frontend tooling
+- **TypeScript**: Strongly typed programming language that builds on JavaScript
+- **Supabase**: Open-source Firebase alternative for managing backend and database
+- **Firebase**: Platform for building mobile and web applications, used here for authentication
+- **Tanstack Query**: Powerful data synchronization and caching tool for managing server state in React applications
+- **Tailwind CSS**: Utility-first CSS framework for styling
+- **Google Maps**: Google Map service
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **Property Search**: Users can search for real estate properties based on location.
+- **Detail View**: Clicking on a property opens a detailed view with more information and images.
+- **Map View**: Properties can be viewed on a map.
+- **Saved Properties**: Powerful data synchronization and caching tool for managing server state in React applications
+- **User Authentication**: Secure login and registration using Firebase Authentication.
+- **State Management**: Application state is managed with TanStack Query and React's Context API.
+- **Responsive Design**: The app is fully responsive and optimized for different screen sizes.
 
-- Configure the top-level `parserOptions` property like this:
+## Screenshots
 
-```js
-export default {
-	// other rules...
-	parserOptions: {
-		ecmaVersion: "latest",
-		sourceType: "module",
-		project: ["./tsconfig.json", "./tsconfig.node.json"],
-		tsconfigRootDir: __dirname,
-	},
-};
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+<a href='https://dreamhome.casa/'> ![image](https://github.com/hakangundogdu/real-estate-vite/blob/main/public/1.png)</a>
+<a href='https://dreamhome.casa/'> ![image](https://github.com/hakangundogdu/real-estate-vite/blob/main/public/2.png)</a>
+<a href='https://dreamhome.casa/'> ![image](https://github.com/hakangundogdu/real-estate-vite/blob/main/public/3.png)</a>
+<a href='https://dreamhome.casa/'> ![image](https://github.com/hakangundogdu/real-estate-vite/blob/main/public/4.png)</a>
