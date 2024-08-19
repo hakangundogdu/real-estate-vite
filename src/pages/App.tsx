@@ -1,5 +1,5 @@
 import "../App.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PropertyList from "@/components/PropertyList";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -20,7 +20,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { getFeatured, getProperties } from "@/api/api";
+import { getFeatured } from "@/api/api";
 import { useQuery } from "@tanstack/react-query";
 import { LoadingSpinner } from "@/components/ui/loading";
 import { useNavigate } from "react-router-dom";
@@ -38,17 +38,12 @@ function App() {
 	const {
 		data: properties,
 		isLoading,
-		refetch,
+
 		isFetching,
 	} = useQuery({
 		queryKey: ["getProperties"],
 		queryFn: () => getFeatured(),
-		enabled: false,
 	});
-
-	useEffect(() => {
-		refetch();
-	}, []);
 
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
