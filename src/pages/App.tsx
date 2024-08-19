@@ -20,7 +20,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { getProperties } from "@/api/api";
+import { getFeatured, getProperties } from "@/api/api";
 import { useQuery } from "@tanstack/react-query";
 import { LoadingSpinner } from "@/components/ui/loading";
 import { useNavigate } from "react-router-dom";
@@ -42,13 +42,7 @@ function App() {
 		isFetching,
 	} = useQuery({
 		queryKey: ["getProperties"],
-		queryFn: () =>
-			getProperties({
-				county: location.length > 0 ? location : null,
-				listing_status: tab,
-				limit: location.length === 0 ? 12 : null,
-				sort: true,
-			}),
+		queryFn: () => getFeatured(),
 		enabled: false,
 	});
 

@@ -32,6 +32,16 @@ export const getProperties = async (
 	const { data } = await query;
 	return data!;
 };
+export const getFeatured = async (): Promise<IProperty[]> => {
+	const { data, error } = await supabase.from("random_listings").select();
+
+	if (error) {
+		console.error("Error fetching random listings:", error.message);
+		return [];
+	}
+
+	return data || [];
+};
 
 export const getProperty = async (id: string): Promise<any> => {
 	const { data: listingData, error: listingError } = await supabase

@@ -4,22 +4,27 @@ import { Button } from "./ui/button";
 import { BiMapAlt } from "react-icons/bi";
 import { useState } from "react";
 import MapMain from "./MapMain";
+import { useLocation } from "react-router-dom";
 
 const PropertyList = ({ properties }: { properties: IProperty[] }) => {
 	const [isOpen, setIsOpen] = useState(false);
+
+	const location = useLocation();
 
 	return (
 		<div className="container">
 			<div className=" flex items-center justify-between mt-4 -mb-4 text-left">
 				<p className="ml-2 font-semibold">
-					{properties?.length === 0
-						? "No properties found."
-						: `${
-								properties[0].city.charAt(0).toUpperCase() +
-								properties[0].city.substring(1)
-							} - ${
-								properties[0].status === "sale" ? "For Sale" : "To Rent"
-							} - ${properties?.length} Properties`}
+					{location.pathname === "/"
+						? "Featured Properties For Sale"
+						: properties?.length === 0
+							? "No properties found."
+							: `${
+									properties[0].city.charAt(0).toUpperCase() +
+									properties[0].city.substring(1)
+								} - ${
+									properties[0].status === "sale" ? "For Sale" : "To Rent"
+								} - ${properties?.length} Properties`}
 				</p>
 				<Button
 					variant="ghost"

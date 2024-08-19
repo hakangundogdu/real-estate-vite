@@ -31,8 +31,8 @@ const PropertyCard = ({ property }: { property: any }) => {
 				<CardHeader className="relative">
 					<CardTitle>£{millify(+property.price)}</CardTitle>
 					<p className="mt-2 font-semibold text-primary">
-						{property.title.length > 28
-							? property.title.substring(0, 25) + " ..."
+						{property.title.length > 30
+							? property.title.substring(0, 27) + " ..."
 							: property.title}
 					</p>
 				</CardHeader>
