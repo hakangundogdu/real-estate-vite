@@ -8,8 +8,9 @@ import {
 	BiPhone,
 	BiChevronRight,
 	BiChevronLeft,
+	BiArrowBack,
 } from "react-icons/bi";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useContext, useEffect, useState } from "react";
 import AuthContext from "@/context/authContext";
@@ -28,6 +29,7 @@ const PropertyDetail = () => {
 	const userId = user?.uid;
 	const savedIds = userData?.savedIds;
 	const [currentImage, setCurrentImage] = useState(0);
+	const navigate = useNavigate();
 
 	const { data: propertyData } = useQuery({
 		queryKey: ["getProperties", id],
@@ -37,7 +39,7 @@ const PropertyDetail = () => {
 	const property = propertyData?.listing;
 	const images = propertyData?.images;
 
-	console.log("propertyData", propertyData);
+	window.scrollTo(0, 0);
 
 	useEffect(() => {
 		if (userData) {
@@ -87,6 +89,16 @@ const PropertyDetail = () => {
 
 	return (
 		<>
+			<div className="container flex -mb-4">
+				<Button
+					variant="link"
+					className="align-left text-md px-0 hover:no-underline text-muted-foreground"
+					onClick={() => navigate(-1)}
+				>
+					<BiArrowBack className="size-5 mr-2" />
+					Back to Search Results
+				</Button>
+			</div>
 			{property ? (
 				<>
 					<div className="flex-auto container px-8 py-6">

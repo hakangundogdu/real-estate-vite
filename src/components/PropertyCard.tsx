@@ -15,7 +15,7 @@ import ImageSkeleton from "./ui/ImageSkeleton";
 const PropertyCard = ({ property }: { property: any }) => {
 	return (
 		<Card className="relative text-left overflow-hidden">
-			<Link to={`/properties/${property.id}`} target="_blank">
+			<Link to={`/properties/${property.id}`}>
 				<div className="h-48 overflow-hidden">
 					{!property.image ? (
 						<ImageSkeleton />

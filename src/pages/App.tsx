@@ -60,7 +60,6 @@ function App() {
 		event.preventDefault();
 		if (!acceptedLocation) setIsOpen(true);
 		navigate(`/search/${tab}/${location}`);
-		// refetch();
 	};
 
 	const locationChangeHandler = (

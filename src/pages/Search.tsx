@@ -33,16 +33,17 @@ function Search() {
 	const [isOpen, setIsOpen] = useState(false);
 	const [sortLowest, setSortLowest] = useState("lowest");
 
-	console.log("tab", tab);
-	console.log("location", location);
-	console.log("paramTab", paramTab);
-	console.log("paramLocation", paramLocation);
-
 	const navigate = useNavigate();
 
 	const acceptedLocation =
 		searchLocation !== undefined &&
 		["london", "manchester", "oxford"].includes(searchLocation.toLowerCase());
+
+	useEffect(() => {
+		if (location.state?.scrollPosition) {
+			window.scrollTo(0, location.state.scrollPosition);
+		}
+	}, [location.state?.scrollPosition]);
 
 	const {
 		data: properties,
@@ -60,6 +61,33 @@ function Search() {
 			}),
 		enabled: false,
 	});
+
+	useEffect(() => {
+		const handleScroll = () => {
+			const currentScrollPosition = window.scrollY;
+			localStorage.setItem("scrollPosition", currentScrollPosition.toString());
+		};
+
+		window.addEventListener("scroll", handleScroll);
+
+		// Cleanup event listener on component unmount
+		return () => {
+			window.removeEventListener("scroll", handleScroll);
+		};
+	}, []);
+
+	useEffect(() => {
+		// Retrieve the scroll position from localStorage
+		const savedScrollPosition = localStorage.getItem("scrollPosition");
+
+		if (savedScrollPosition) {
+			// Restore the scroll position
+			window.scrollTo(0, parseInt(savedScrollPosition, 10));
+
+			// Optionally, clear the saved scroll position from localStorage
+			localStorage.removeItem("scrollPosition");
+		}
+	}, []);
 
 	useEffect(() => {
 		refetch();
