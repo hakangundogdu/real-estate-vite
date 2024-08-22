@@ -94,7 +94,7 @@ function App() {
 									</SelectContent>
 								</Select>
 								<form
-									className="flex flex-col sm:flex-row w-full sm:w-3/4 md:w-1/2 gap-2"
+									className="flex flex-col sm:flex-row w-full sm:w-3/4 md:w-1/2 xl:w-1/4 gap-2"
 									onSubmit={handleSubmit}
 								>
 									<Input
