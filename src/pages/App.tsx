@@ -30,13 +30,10 @@ function App() {
 	const [location, setLocation] = useState("");
 	const [isOpen, setIsOpen] = useState(false);
 	const navigate = useNavigate();
-	console.log("location", location);
 
 	const acceptedLocation = ["london", "manchester", "oxford"].includes(
 		location.toLowerCase()
 	);
-
-	console.log("acceptedLocation", acceptedLocation);
 
 	const {
 		data: properties,

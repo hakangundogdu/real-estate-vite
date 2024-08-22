@@ -5,7 +5,6 @@ import {
 	CogIcon,
 	ArrowLeftStartOnRectangleIcon,
 } from "@heroicons/react/24/outline";
-
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -59,7 +58,6 @@ export function UserNav() {
 				</DropdownMenuGroup>
 				<DropdownMenuSeparator />
 				<DropdownMenuItem onClick={logOut}>
-					{" "}
 					<ArrowLeftStartOnRectangleIcon className="w-4 h-4 mr-2" />
 					Log out
 				</DropdownMenuItem>

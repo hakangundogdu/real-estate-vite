@@ -5,6 +5,7 @@ import { Button } from "../ui/button";
 import { useContext } from "react";
 import AuthContext from "@/context/authContext";
 import { UserNav } from "./UserNav";
+import { HamburgerMenu } from "./HamburgerMenu";
 
 const Header = () => {
 	const { user } = useContext(AuthContext);
@@ -18,14 +19,14 @@ const Header = () => {
 				</p>
 			</Link>
 			{!user ? (
-				<div className="flex items-center gap-4">
+				<div className="items-center hidden sm:flex gap-4">
 					<Link to="/login">Login</Link>
 					<Link to="/signup">
 						<Button>Sign Up</Button>
 					</Link>
 				</div>
 			) : (
-				<div className="flex items-center gap-4">
+				<div className="hidden sm:flex items-center gap-4 ">
 					<Link to="/saved">
 						<Button
 							className="bg-secondary text-primary text-sm rounded-full hover:text-white"
@@ -37,6 +38,9 @@ const Header = () => {
 					<UserNav />
 				</div>
 			)}
+			<div className="flex sm:hidden ">
+				<HamburgerMenu />
+			</div>
 		</nav>
 	);
 };

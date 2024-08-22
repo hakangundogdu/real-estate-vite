@@ -8,12 +8,11 @@ import { useLocation } from "react-router-dom";
 
 const PropertyList = ({ properties }: { properties: IProperty[] }) => {
 	const [isOpen, setIsOpen] = useState(false);
-
 	const location = useLocation();
 
 	return (
 		<div className="container p-1 md:px-8">
-			<div className=" flex items-center justify-between mt-4 -mb-4 text-left">
+			<div className=" flex items-center justify-between pl-2 mt-4 -mb-4 text-left">
 				<p className=" font-semibold">
 					{location.pathname === "/"
 						? "Featured Properties For Sale"
@@ -31,8 +30,8 @@ const PropertyList = ({ properties }: { properties: IProperty[] }) => {
 					className="bg-none text-md"
 					onClick={() => setIsOpen(!isOpen)}
 				>
-					<BiMapAlt className="size-5 mr-2" />
-					<p className="hidden sm:flex ">
+					<BiMapAlt className="size-5" />
+					<p className="hidden ml-2 sm:flex ">
 						{isOpen ? "Hide Map" : "Show on Map"}
 					</p>
 				</Button>
