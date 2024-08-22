@@ -89,7 +89,7 @@ const PropertyDetail = () => {
 
 	return (
 		<>
-			<div className="container flex -mb-4">
+			<div className="container flex -mb-4 px-1 md:px-8">
 				<Button
 					variant="link"
 					className="align-left text-md px-0 hover:no-underline text-muted-foreground"
@@ -101,7 +101,7 @@ const PropertyDetail = () => {
 			</div>
 			{property ? (
 				<>
-					<div className="flex-auto container px-8 py-6">
+					<div className="flex-auto container py-6 px-1 md:px-8">
 						<div className="flex flex-col md:flex-row md:h-96">
 							<div className="flex w-full md:w-1/2 bg-center bg-cover h-96 overflow-hidden rounded-xl relative">
 								<img

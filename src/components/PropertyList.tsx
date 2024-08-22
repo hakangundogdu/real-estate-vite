@@ -11,7 +11,7 @@ const PropertyList = ({ properties }: { properties: IProperty[] }) => {
 	const location = useLocation();
 
 	return (
-		<div className="container p-1 md:px-8">
+		<div className="container px-1 md:px-8">
 			<div className=" flex items-center justify-between pl-2 mt-4 -mb-4 text-left">
 				<p className=" font-semibold">
 					{location.pathname === "/"

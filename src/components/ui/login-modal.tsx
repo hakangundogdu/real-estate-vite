@@ -26,9 +26,9 @@ export function LoginAlertDialog(props: LoginProps) {
 				</AlertDialogHeader>
 				<AlertDialogFooter>
 					<AlertDialogCancel onClick={props.onClose}>Cancel</AlertDialogCancel>
-					<Link to="/login">
-						<AlertDialogAction>Login</AlertDialogAction>
-					</Link>
+					<AlertDialogAction>
+						<Link to="/login">Login </Link>
+					</AlertDialogAction>
 				</AlertDialogFooter>
 			</AlertDialogContent>
 		</AlertDialog>
