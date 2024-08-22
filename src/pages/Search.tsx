@@ -31,7 +31,7 @@ function Search() {
 	const [tab, setTab] = useState(paramTab);
 	const [searchLocation, setSearchLocation] = useState(paramLocation);
 	const [isOpen, setIsOpen] = useState(false);
-	const [sortLowest, setSortLowest] = useState("lowest");
+	const [sortLowest, setSortLowest] = useState("highest");
 
 	const navigate = useNavigate();
 
