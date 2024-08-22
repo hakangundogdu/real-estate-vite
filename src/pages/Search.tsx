@@ -118,7 +118,7 @@ function Search() {
 	};
 	return (
 		<div className="flex-auto flex-col w-full">
-			<div className="container flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1">
+			<div className="container flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1 px-1 md:px-8">
 				<div className="h-10 w-full md:w-1/2 lg:w-1/3 rounded-full bg-background py-2 text-sm placeholder:text-muted-foreground flex items-center gap-2 ">
 					<Select onValueChange={onTabChange} value={tab}>
 						<SelectTrigger className="w-[100px]  focus:ring-0 focus:ring-offset-0	">
@@ -145,7 +145,7 @@ function Search() {
 					</form>
 				</div>
 				<div className="flex items-center justify-start">
-					<p className="text-sm mr-2">Sort:</p>
+					<p className="text-sm ml-2">Sort:</p>
 					<Select onValueChange={onSortChange} value={sortLowest}>
 						<SelectTrigger className="w-32 border-0 focus:ring-0 focus:ring-offset-0	">
 							<SelectValue />

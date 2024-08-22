@@ -12,7 +12,7 @@ const PropertyList = ({ properties }: { properties: IProperty[] }) => {
 
 	return (
 		<div className="container px-1 md:px-8">
-			<div className=" flex items-center justify-between pl-2 mt-4 -mb-4 text-left">
+			<div className=" flex items-center justify-between pl-2 mt-2 -mb-6 text-left">
 				<p className=" font-semibold">
 					{location.pathname === "/"
 						? "Featured Properties For Sale"
