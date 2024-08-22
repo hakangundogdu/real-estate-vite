@@ -19,8 +19,8 @@ const MapMain = ({ properties }: { properties: IProperty[] }) => {
 	const center = coordinates[properties[0].city.toLowerCase()];
 
 	return (
-		<div className=" grid grid-flow-row gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 py-8">
-			<div className="rounded-xl overflow-hidden sm:col-span-1 md:col-span-1 lg:col-span-2 xl:col-span-3">
+		<div className=" grid grid-auto-flow gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 py-8">
+			<div className="rounded-xl h-[400px] overflow-hidden col-span-1 md:col-span-1 lg:col-span-2 xl:col-span-3">
 				<APIProvider apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
 					<Map
 						style={{ width: "100%", height: "100%" }}

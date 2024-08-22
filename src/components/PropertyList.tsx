@@ -12,9 +12,9 @@ const PropertyList = ({ properties }: { properties: IProperty[] }) => {
 	const location = useLocation();
 
 	return (
-		<div className="container">
+		<div className="container p-1 md:px-8">
 			<div className=" flex items-center justify-between mt-4 -mb-4 text-left">
-				<p className="ml-2 font-semibold">
+				<p className=" font-semibold">
 					{location.pathname === "/"
 						? "Featured Properties For Sale"
 						: properties?.length === 0
@@ -28,16 +28,18 @@ const PropertyList = ({ properties }: { properties: IProperty[] }) => {
 				</p>
 				<Button
 					variant="ghost"
-					className=" text-md"
+					className="bg-none text-md"
 					onClick={() => setIsOpen(!isOpen)}
 				>
 					<BiMapAlt className="size-5 mr-2" />
-					{isOpen ? "Hide Map" : "Show on Map"}
+					<p className="hidden sm:flex ">
+						{isOpen ? "Hide Map" : "Show on Map"}
+					</p>
 				</Button>
 			</div>
 
 			{isOpen && (
-				<div className="h-[400px] w-full mb-6">
+				<div className="grid gap-6 ">
 					<MapMain properties={properties} />
 				</div>
 			)}

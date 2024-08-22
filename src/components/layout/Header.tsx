@@ -10,10 +10,10 @@ const Header = () => {
 	const { user } = useContext(AuthContext);
 
 	return (
-		<nav className="container px-8 py-2 flex items-center justify-between">
+		<nav className="container px-2 py-1 sm:px-8 sm:py-2 flex items-center justify-between">
 			<Link to="/" className="flex items-center">
-				<HomeIcon className="w-6 h-6 mr-2 text-primary" />
-				<p className="font-bold text-2xl">
+				<HomeIcon className="size-5 sm:size-6 mr-2 text-primary" />
+				<p className="font-bold text-lg sm:text-xl md:text-2xl">
 					Dream <span className="text-primary">Home</span>
 				</p>
 			</Link>
@@ -28,13 +28,12 @@ const Header = () => {
 				<div className="flex items-center gap-4">
 					<Link to="/saved">
 						<Button
-							className="bg-secondary text-primary rounded-full hover:text-white"
+							className="bg-secondary text-primary text-sm rounded-full hover:text-white"
 							size="icon"
 						>
 							<HeartIcon className="size-6" />
 						</Button>
 					</Link>
-
 					<UserNav />
 				</div>
 			)}

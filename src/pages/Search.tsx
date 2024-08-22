@@ -118,7 +118,7 @@ function Search() {
 	};
 	return (
 		<div className="flex-auto flex-col w-full">
-			<div className="container flex items-center justify-between gap-4">
+			<div className="container flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1">
 				<div className="h-10 w-full md:w-1/2 lg:w-1/3 rounded-full bg-background py-2 text-sm placeholder:text-muted-foreground flex items-center gap-2 ">
 					<Select onValueChange={onTabChange} value={tab}>
 						<SelectTrigger className="w-[100px]  focus:ring-0 focus:ring-offset-0	">
