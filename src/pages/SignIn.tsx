@@ -13,7 +13,6 @@ export function Signin() {
 	const navigate = useNavigate();
 	const location = useLocation();
 
-	console.log("location", location.state);
 	const lastUrl = localStorage.getItem("lastUrl");
 
 	const signWithGoogle = async () => {
@@ -22,8 +21,8 @@ export function Signin() {
 		} catch (error) {
 			console.log("error", error);
 		} finally {
-			if (lastUrl) {
-				navigate(lastUrl);
+			if (location.state) {
+				navigate(location.state);
 			} else navigate("/");
 		}
 	};
