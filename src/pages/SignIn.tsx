@@ -6,11 +6,27 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useContext } from "react";
 import AuthContext from "@/context/authContext";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export function Signin() {
 	const { signInWithGoogle, signIn } = useContext(AuthContext);
 	const navigate = useNavigate();
+	const location = useLocation();
+
+	console.log("location", location.state);
+	const lastUrl = localStorage.getItem("lastUrl");
+
+	const signWithGoogle = async () => {
+		try {
+			await signInWithGoogle();
+		} catch (error) {
+			console.log("error", error);
+		} finally {
+			if (lastUrl) {
+				navigate(lastUrl);
+			} else navigate("/");
+		}
+	};
 
 	const handleSubmit = (event: React.SyntheticEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -24,8 +40,11 @@ export function Signin() {
 			signIn(formElements.email.value, formElements.password.value);
 		} catch (error) {
 			console.log("error", error);
+		} finally {
+			if (lastUrl) {
+				navigate(lastUrl);
+			} else navigate("/");
 		}
-		navigate("/");
 	};
 
 	return (
@@ -35,7 +54,7 @@ export function Signin() {
 					<CardTitle className="text-2xl">Login</CardTitle>
 				</CardHeader>
 				<CardContent className="grid gap-4">
-					<Button variant="outline" onClick={signInWithGoogle}>
+					<Button variant="outline" onClick={signWithGoogle}>
 						<FcGoogle className="mr-2 h-4 w-4" />
 						Google
 					</Button>

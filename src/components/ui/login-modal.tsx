@@ -8,13 +8,16 @@ import {
 	AlertDialogHeader,
 	AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Link } from "react-router-dom";
+import { goToLogin } from "@/lib/utils";
+import { useLocation } from "react-router-dom";
 
 type LoginProps = {
 	onClose: () => void;
 };
 
 export function LoginAlertDialog(props: LoginProps) {
+	const location = useLocation();
+
 	return (
 		<AlertDialog open={true}>
 			<AlertDialogContent>
@@ -26,9 +29,15 @@ export function LoginAlertDialog(props: LoginProps) {
 				</AlertDialogHeader>
 				<AlertDialogFooter>
 					<AlertDialogCancel onClick={props.onClose}>Cancel</AlertDialogCancel>
-					<AlertDialogAction>
-						<Link to="/login">Login </Link>
+
+					<AlertDialogAction onClick={() => goToLogin(location.pathname)}>
+						Login
 					</AlertDialogAction>
+					{/* <AlertDialogAction>
+						<Link to="/login" state={location.pathname}>
+							Login{" "}
+						</Link>
+					</AlertDialogAction> */}
 				</AlertDialogFooter>
 			</AlertDialogContent>
 		</AlertDialog>
