@@ -77,7 +77,7 @@ function App() {
 							Find Your Dream Home
 						</p>
 						<p className="text-white text-md md:text-lg lg:text-xl xl:text-2xl">
-							Search properties for sale and to rent in the United Kingdom
+							Search properties for sale and to rent in the UK
 						</p>
 
 						<div className="flex flex-col w-full mt-2 ">
