@@ -3,11 +3,15 @@
 ## Overview
 
 This Real Estate Search Application is a modern, responsive web application built with the following technologies:
+MERN Stack
 
 - **React**: JavaScript library for building user interfaces
 - **Vite**: Next-generation frontend tooling
 - **TypeScript**: Strongly typed programming language that builds on JavaScript
-- **Supabase**: Open-source Firebase alternative for managing backend and database
+- **Node.js**: JavaScript runtime for building server-side applications
+- **Express**: Web framework for Node.js to build APIs
+- **MongoDB**: NoSQL database for storing application data
+- **REST API**: Open-source Firebase alternative for managing backend and database
 - **Firebase**: Platform for building mobile and web applications, used here for authentication
 - **Tanstack Query**: Powerful data synchronization and caching tool for managing server state in React applications
 - **Tailwind CSS**: Utility-first CSS framework for styling
@@ -22,6 +26,10 @@ This Real Estate Search Application is a modern, responsive web application buil
 - **User Authentication**: Secure login and registration using Firebase Authentication.
 - **State Management**: Application state is managed with TanStack Query and React's Context API.
 - **Responsive Design**: The app is fully responsive and optimized for different screen sizes.
+
+## BackEnd
+
+**Backend Repository**: [Dream Home Backend](https://github.com/hakangundogdu/Dream-Home-Backend)
 
 ## Screenshots
 
