@@ -38,10 +38,9 @@ function App() {
 	const {
 		data: properties,
 		isLoading,
-
 		isFetching,
 	} = useQuery({
-		queryKey: ["getProperties"],
+		queryKey: ["featured"],
 		queryFn: () => getFeatured(),
 	});
 

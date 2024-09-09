@@ -10,6 +10,8 @@ const PropertyList = ({ properties }: { properties: IProperty[] }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const location = useLocation();
 
+	console.log("properties", properties);
+
 	return (
 		<div className="container px-1 md:px-8">
 			<div className=" flex items-center justify-between pl-2 mt-2 -mb-6 text-left">

@@ -1,5 +1,8 @@
 import { IProperty } from "@/types";
 import { supabase } from "../utils/supabase";
+import axios from "axios";
+
+const API_BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export interface IQueryProps {
 	county: string | null | undefined;
@@ -33,14 +36,34 @@ export const getProperties = async (
 	return data!;
 };
 export const getFeatured = async (): Promise<IProperty[]> => {
-	const { data, error } = await supabase.from("featured").select();
+	try {
+		const { data } = await axios.get(`${API_BASE_URL}/properties`);
 
-	if (error) {
-		console.error("Error fetching random listings:", error.message);
-		return [];
+		// Transform the data to convert $numberDecimal to regular numbers and _id to id
+		const transformedData = data.map((property: any) => {
+			const { _id, ...rest } = property;
+			return {
+				id: _id,
+				...rest,
+				longitude: property.longitude?.$numberDecimal
+					? Number(property.longitude.$numberDecimal)
+					: property.longitude,
+				latitude: property.latitude?.$numberDecimal
+					? Number(property.latitude.$numberDecimal)
+					: property.latitude,
+				price: property.price?.$numberDecimal
+					? Number(property.price.$numberDecimal)
+					: property.price,
+			};
+		});
+
+		return transformedData;
+	} catch (error) {
+		if (axios.isAxiosError(error)) {
+			throw new Error(`Failed to fetch properties: ${error.message}`);
+		}
+		throw error;
 	}
-
-	return data || [];
 };
 
 export const getProperty = async (id: string): Promise<any> => {

@@ -17,12 +17,12 @@ const PropertyCard = ({ property }: { property: any }) => {
 		<Card className="relative text-left overflow-hidden">
 			<Link to={`/properties/${property.id}`}>
 				<div className="h-48 overflow-hidden">
-					{!property.image ? (
+					{!property.images[0] ? (
 						<ImageSkeleton />
 					) : (
 						<img
 							className="w-full h-48 object-cover hover:scale-105 transition-all duration-300 ease-in-out"
-							src={property.image}
+							src={property.images[0]}
 							alt="image of house"
 						/>
 					)}
