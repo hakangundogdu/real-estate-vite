@@ -9,9 +9,7 @@ import {
 	signOut,
 	onAuthStateChanged,
 } from "firebase/auth";
-import { auth, colRef } from "../utils/firebase";
-import { DocumentData, onSnapshot, query, where } from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
+import { auth } from "../config/firebase";
 
 export type AuthContextType = {
 	user: User | null;
@@ -19,7 +17,6 @@ export type AuthContextType = {
 	createUser: (email: string, password: string) => Promise<UserCredential>;
 	signIn: (email: string, password: string) => Promise<UserCredential>;
 	logOut: () => Promise<void>;
-	userData: DocumentData | undefined;
 };
 type createUser = (email: string, password: string) => Promise<UserCredential>;
 
@@ -27,15 +24,11 @@ const AuthContext = createContext({} as AuthContextType);
 
 export const AuthProvider = ({ children }: PropsWithChildren<unknown>) => {
 	const [user, setUser] = useState<User | null>(null);
-	const [userData, setUserData] = useState<any | null>(null);
-
 	const provider = new GoogleAuthProvider();
-	const navigate = useNavigate();
 
 	// Sign in with Google
 	const signInWithGoogle = () => {
-		signInWithPopup(auth, provider);
-		navigate("/");
+		return signInWithPopup(auth, provider);
 	};
 
 	const createUser: createUser = (email, password) => {
@@ -52,49 +45,15 @@ export const AuthProvider = ({ children }: PropsWithChildren<unknown>) => {
 	useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
 			setUser(currentUser);
-			// 	if (currentUser) {
-			// 		onSnapshot(doc(db, 'users', currentUser.uid), (snapshot) => {
-			// 			setUserData(snapshot.data());
-
-			// 			// if (!snapshot.exists()) {
-			// 			// 	setDoc(doc(db, 'users', user.uid), {
-			// 			// 		displayName: user.displayName,
-			// 			// 		email: user.email,
-			// 			// 		photoURL: user.photoURL,
-			// 			// 		createdAt: serverTimestamp(),
-			// 			// 	});
-			// 			// } else {
-			// 			// 	setUserData(snapshot.data());
-			// 			// }
-			// 		});
-			// }
 		});
 		return () => {
 			unsubscribe();
 		};
 	}, []);
 
-	useEffect(() => {
-		if (!user) return;
-		const q = query(colRef, where("uid", "==", user.uid));
-
-		onSnapshot(q, (snapshot) => {
-			let data: any = [];
-			snapshot.forEach((doc) => {
-				data.push({ ...doc.data(), id: doc.id });
-			});
-
-			if (data.length === 0) {
-				return;
-			} else {
-				setUserData({ id: data[0].id, savedIds: data[0].saved });
-			}
-		});
-	}, [user]);
-
 	return (
 		<AuthContext.Provider
-			value={{ createUser, user, logOut, signIn, signInWithGoogle, userData }}
+			value={{ createUser, user, logOut, signIn, signInWithGoogle }}
 		>
 			{children}
 		</AuthContext.Provider>

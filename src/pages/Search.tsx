@@ -31,7 +31,7 @@ function Search() {
 	const [tab, setTab] = useState(paramTab);
 	const [searchLocation, setSearchLocation] = useState(paramLocation);
 	const [isOpen, setIsOpen] = useState(false);
-	const [sortLowest, setSortLowest] = useState("highest");
+	const [sort, setSort] = useState<"asc" | "desc">("desc"); // Updated type to "asc" | "desc"
 
 	const navigate = useNavigate();
 
@@ -54,10 +54,9 @@ function Search() {
 		queryKey: ["getProperties"],
 		queryFn: () =>
 			getProperties({
-				county: paramLocation,
-				listing_status: paramTab,
-				limit: null,
-				sort: sortLowest === "lowest",
+				city: paramLocation,
+				status: paramTab,
+				sort: sort,
 			}),
 		enabled: false,
 	});
@@ -91,7 +90,7 @@ function Search() {
 
 	useEffect(() => {
 		refetch();
-	}, [location, sortLowest]);
+	}, [location, sort]);
 
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -114,8 +113,11 @@ function Search() {
 	};
 
 	const onSortChange = (value: string) => {
-		setSortLowest(value);
+		setSort(value);
 	};
+
+	console.log("sort", sort);
+
 	return (
 		<div className="flex-auto flex-col w-full">
 			<div className="container flex flex-col sm:flex-row items-start sm:items-center justify-between gap-1 px-1 md:px-8">
@@ -146,14 +148,14 @@ function Search() {
 				</div>
 				<div className="flex items-center justify-start">
 					<p className="text-sm ml-2">Sort:</p>
-					<Select onValueChange={onSortChange} value={sortLowest}>
+					<Select onValueChange={onSortChange} value={sort}>
 						<SelectTrigger className="w-32 border-0 focus:ring-0 focus:ring-offset-0	">
 							<SelectValue />
 						</SelectTrigger>
 						<SelectContent>
 							<SelectGroup>
-								<SelectItem value="highest">Highest Price</SelectItem>
-								<SelectItem value="lowest">Lowest Price</SelectItem>
+								<SelectItem value="desc">Highest Price</SelectItem>
+								<SelectItem value="asc">Lowest Price</SelectItem>
 							</SelectGroup>
 						</SelectContent>
 					</Select>

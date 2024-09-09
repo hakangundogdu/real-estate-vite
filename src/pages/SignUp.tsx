@@ -9,24 +9,49 @@ import { Label } from "@/components/ui/label";
 import { useContext } from "react";
 import AuthContext from "@/context/authContext";
 import { Link, useNavigate } from "react-router-dom";
+import { updateProfile } from "firebase/auth";
 
 export function Signup() {
-	const { signInWithGoogle, signIn } = useContext(AuthContext);
+	const { signInWithGoogle, createUser } = useContext(AuthContext);
 	const navigate = useNavigate();
+	const signInGoogle = async () => {
+		try {
+			await signInWithGoogle();
+			navigate(-1);
+		} catch (error) {
+			console.log("error", error);
+		}
+	};
 
-	const handleSubmit = (event: React.SyntheticEvent<HTMLFormElement>) => {
+	const handleSubmit = async (event: React.SyntheticEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		const form = event.currentTarget;
 		const formElements = form.elements as typeof form.elements & {
 			email: { value: string };
 			password: { value: string };
+			firstname: { value: string };
+			lastname: { value: string };
 		};
+		const displayName = `${
+			formElements.firstname.value.charAt(0).toUpperCase() +
+			formElements.firstname.value.slice(1)
+		} ${
+			formElements.lastname.value.charAt(0).toUpperCase() +
+			formElements.lastname.value.slice(1)
+		}`;
+
 		try {
-			signIn(formElements.email.value, formElements.password.value);
+			const userCredential = await createUser(
+				formElements.email.value,
+				formElements.password.value
+			);
+			await updateProfile(userCredential.user, {
+				displayName: displayName,
+			});
+			navigate(-1);
 		} catch (error) {
 			console.log("error", error);
 		}
-		navigate("/");
 	};
 
 	return (
@@ -36,7 +61,7 @@ export function Signup() {
 					<CardTitle className="text-2xl">Signup</CardTitle>
 				</CardHeader>
 				<CardContent className="grid gap-4">
-					<Button variant="outline" onClick={signInWithGoogle}>
+					<Button variant="outline" onClick={signInGoogle}>
 						<FcGoogle className="mr-2 h-4 w-4" />
 						Google
 					</Button>
@@ -70,13 +95,13 @@ export function Signup() {
 							<Input id="password" type="password" />
 						</div>
 						<Button className="w-full" type="submit">
-							Login{" "}
+							Sign up{" "}
 						</Button>
 					</form>
 					<p className="text-sm text-muted-foreground">
-						No account yet?{" "}
+						Alredy have an account?
 						<Button variant="link">
-							<Link to="/signup">Sign up</Link>
+							<Link to="/login">Login</Link>
 						</Button>
 					</p>
 				</CardContent>

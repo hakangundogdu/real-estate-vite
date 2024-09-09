@@ -6,14 +6,11 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useContext } from "react";
 import AuthContext from "@/context/authContext";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export function Signin() {
 	const { signInWithGoogle, signIn } = useContext(AuthContext);
 	const navigate = useNavigate();
-	const location = useLocation();
-
-	const lastUrl = localStorage.getItem("lastUrl");
 
 	const signWithGoogle = async () => {
 		try {
@@ -21,9 +18,7 @@ export function Signin() {
 		} catch (error) {
 			console.log("error", error);
 		} finally {
-			if (location.state) {
-				navigate(location.state);
-			} else navigate("/");
+			navigate(-1);
 		}
 	};
 
@@ -40,9 +35,7 @@ export function Signin() {
 		} catch (error) {
 			console.log("error", error);
 		} finally {
-			if (lastUrl) {
-				navigate(lastUrl);
-			} else navigate("/");
+			navigate(-1);
 		}
 	};
 

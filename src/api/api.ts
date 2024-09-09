@@ -1,14 +1,12 @@
 import { IProperty } from "@/types";
-import { supabase } from "../utils/supabase";
 import axios from "axios";
 
 const API_BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export interface IQueryProps {
-	county: string | null | undefined;
-	listing_status: string | null | undefined;
-	limit: number | null | undefined;
-	sort: boolean;
+	city: string | null | undefined;
+	status: string | null | undefined;
+	sort: "asc" | "desc";
 }
 export interface ISavedProperty {
 	uid: string | null | undefined;
@@ -18,26 +16,28 @@ export interface ISavedProperty {
 export const getProperties = async (
 	props: IQueryProps
 ): Promise<IProperty[]> => {
-	const params = {
-		county: props.county,
-		listing_status: props.listing_status,
-		limit: props.county ? null : 12,
-		sort: props.sort,
-	};
+	const { city, status, sort } = props;
+	try {
+		const { data } = await axios.get(
+			`${API_BASE_URL}/properties/search?city=${city?.toLowerCase()}&status=${status}&sort=${sort}`
+		);
 
-	let query = supabase
-		.from("listings")
-		.select("*")
-		.ilike("city", params.county || "london")
-		.eq("status", props.listing_status)
-		.order("price", { ascending: props.sort });
+		// Transform the data to convert $numberDecimal to regular numbers and _id to id
+		const transformedData = data.map((property: any) => {
+			const { _id, ...rest } = property;
+			return {
+				id: _id,
+				...rest,
+			};
+		});
 
-	if (!params.county) {
-		query = query.limit(12);
+		return transformedData;
+	} catch (error) {
+		if (axios.isAxiosError(error)) {
+			throw new Error(`Failed to fetch properties: ${error.message}`);
+		}
+		throw error;
 	}
-
-	const { data } = await query;
-	return data!;
 };
 export const getFeatured = async (): Promise<IProperty[]> => {
 	try {
