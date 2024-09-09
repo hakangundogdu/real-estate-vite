@@ -112,7 +112,7 @@ function Search() {
 		setTab(value);
 	};
 
-	const onSortChange = (value: string) => {
+	const onSortChange = (value: "asc" | "desc") => {
 		setSort(value);
 	};
 

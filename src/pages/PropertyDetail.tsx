@@ -4,12 +4,7 @@ import {
 	saveProperty,
 	deleteSavedProperty,
 } from "@/api/api";
-import {
-	QueryClient,
-	useMutation,
-	useQuery,
-	useQueryClient,
-} from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import millify from "millify";
 import {
 	BiBath,
