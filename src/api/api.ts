@@ -10,6 +10,10 @@ export interface IQueryProps {
 	limit: number | null | undefined;
 	sort: boolean;
 }
+export interface ISavedProperty {
+	uid: string | null | undefined;
+	id: string | null | undefined;
+}
 
 export const getProperties = async (
 	props: IQueryProps
@@ -67,45 +71,64 @@ export const getFeatured = async (): Promise<IProperty[]> => {
 };
 
 export const getProperty = async (id: string): Promise<any> => {
-	const { data: listingData, error: listingError } = await supabase
-		.from("listings")
-		.select()
-		.eq("id", id)
-		.single();
-
-	if (listingError) {
-		console.error("Error fetching listing:", listingError.message);
-		return { listing: null, photos: [] };
+	try {
+		const { data } = await axios.get(`${API_BASE_URL}/properties/${id}`);
+		const { _id, ...rest } = data;
+		return { id: _id, ...rest };
+	} catch (error) {
+		if (axios.isAxiosError(error)) {
+			throw new Error(`Failed to fetch property: ${error.message}`);
+		}
+		throw error;
 	}
-
-	const { data: photosData, error: imagesError } = await supabase
-		.from("images")
-		.select()
-		.eq("listingId", id);
-	if (imagesError) {
-		console.error("Error fetching photos:", imagesError.message);
-	}
-
-	return {
-		listing: listingData,
-		images: photosData || [],
-	};
 };
 
-export const getPropertiesById = async (savedIds: string[]): Promise<any[]> => {
-	if (savedIds.length === 0) {
-		return [];
+export const saveProperty = async (
+	saved: ISavedProperty
+): Promise<ISavedProperty> => {
+	try {
+		const { data } = await axios.post(`${API_BASE_URL}/users/saved`, saved);
+		return data;
+	} catch (error) {
+		if (axios.isAxiosError(error)) {
+			throw new Error(`Failed to save property: ${error.message}`);
+		}
+		throw error;
 	}
+};
 
-	const { data, error } = await supabase
-		.from("listings")
-		.select()
-		.in("id", savedIds);
-
-	if (error) {
-		console.error("Error fetching listings:", error.message);
-		return [];
+export const deleteSavedProperty = async (
+	saved: ISavedProperty
+): Promise<void> => {
+	try {
+		const { data: res } = await axios.delete(`${API_BASE_URL}/users/saved`, {
+			data: saved,
+		});
+		return res;
+	} catch (error) {
+		if (axios.isAxiosError(error)) {
+			throw new Error(`Failed to remove saved property: ${error.message}`);
+		}
+		throw error;
 	}
+};
 
-	return data || [];
+export const getSavedProperties = async (id: string): Promise<IProperty[]> => {
+	try {
+		const { data } = await axios.get(`${API_BASE_URL}/users/saved/${id}`);
+		const transformedData = data.map((property: any) => {
+			const { _id, ...rest } = property;
+			return {
+				id: _id,
+				...rest,
+			};
+		});
+
+		return transformedData;
+	} catch (error) {
+		if (axios.isAxiosError(error)) {
+			throw new Error(`Failed to fetch saved properties: ${error.message}`);
+		}
+		throw error;
+	}
 };

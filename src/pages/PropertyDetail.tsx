@@ -1,5 +1,15 @@
-import { getProperty } from "@/api/api";
-import { useQuery } from "@tanstack/react-query";
+import {
+	getProperty,
+	getSavedProperties,
+	saveProperty,
+	deleteSavedProperty,
+} from "@/api/api";
+import {
+	QueryClient,
+	useMutation,
+	useQuery,
+	useQueryClient,
+} from "@tanstack/react-query";
 import millify from "millify";
 import {
 	BiBath,
@@ -12,77 +22,72 @@ import {
 } from "react-icons/bi";
 import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import AuthContext from "@/context/authContext";
-import { db, colRef } from "../utils/firebase";
-import { addDoc, doc, updateDoc } from "@firebase/firestore";
 import PropertySkeleton from "@/components/ui/PropertySkeleton";
 import { LoginAlertDialog } from "@/components/ui/login-modal";
 import MapWide from "@/components/MapWide";
+import { Loader2 } from "lucide-react";
 
 const PropertyDetail = () => {
 	const { id } = useParams();
-	const { user, userData } = useContext(AuthContext);
-	const [saved, setSaved] = useState(false);
+	const { user } = useContext(AuthContext);
 	const [isOpen, setIsOpen] = useState(false);
-	const docRef = doc(db, "users", `${userData?.id}`);
 	const userId = user?.uid;
-	const savedIds = userData?.savedIds;
 	const [currentImage, setCurrentImage] = useState(0);
 	const navigate = useNavigate();
+	const queryClient = useQueryClient();
 
-	const { data: propertyData } = useQuery({
-		queryKey: ["getProperties", id],
+	const { data: property } = useQuery({
+		queryKey: ["getProperty", id],
 		queryFn: () => getProperty(id!),
 	});
 
-	const property = propertyData?.listing;
-	const images = propertyData?.images;
+	const { data: savedProperties, isFetching } = useQuery({
+		queryKey: ["getSaved", user?.uid],
+		queryFn: () => getSavedProperties(user?.uid!),
+	});
+
+	const saveMutation = useMutation({
+		mutationFn: saveProperty,
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["getSaved"] });
+		},
+	});
+	const deleteMutation = useMutation({
+		mutationFn: deleteSavedProperty,
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ["getSaved"] });
+		},
+	});
+
+	const isSaved = savedProperties?.some((item) => item.id === id);
 
 	window.scrollTo(0, 0);
 
-	useEffect(() => {
-		if (userData) {
-			setSaved(userData.savedIds?.includes(id));
-		}
-	}, [userData, savedIds]);
-
 	const prev = () =>
 		setCurrentImage((currentImage) =>
-			currentImage === 0 ? images.length - 1 : currentImage - 1
+			currentImage === 0 ? property.images.length - 1 : currentImage - 1
 		);
 
 	const next = () =>
 		setCurrentImage((currentImage) =>
-			currentImage === images.length - 1 ? 0 : currentImage + 1
+			currentImage === property.images.length - 1 ? 0 : currentImage + 1
 		);
 
-	const saveHandler = (id: string) => {
+	const saveHandler = () => {
 		if (!userId) {
 			setIsOpen(true);
 		} else {
-			const newList = [...savedIds, id];
-
-			if (savedIds.length === 0) {
-				addDoc(colRef, {
-					uid: userId,
-					saved: newList,
-				});
-			} else {
-				updateDoc(docRef, {
-					uid: userId,
-					saved: newList,
-				});
-			}
+			saveMutation.mutate({
+				uid: userId,
+				id: id,
+			});
 		}
 	};
 
-	const removeSaveHandler = (id: string) => {
-		const newList = savedIds.filter((item: string) => item !== id);
-		updateDoc(docRef, {
-			uid: userId,
-			saved: newList,
-		});
+	const removeSaveHandler = () => {
+		deleteMutation.mutate({ uid: userId, id });
 	};
 
 	const closeHandler = () => setIsOpen(false);
@@ -106,7 +111,7 @@ const PropertyDetail = () => {
 							<div className="flex w-full md:w-1/2 bg-center bg-cover h-96 overflow-hidden rounded-xl relative">
 								<img
 									className="w-full h-96 object-cover"
-									src={images[currentImage].image}
+									src={property.images[currentImage]}
 									alt="image of house"
 								/>
 								<div className="absolute inset-0 flex items-center justify-between p-4">
@@ -125,14 +130,16 @@ const PropertyDetail = () => {
 								</div>
 								<div className="absolute bottom-4 right-0 left-0">
 									<div className="flex items-center justify-center gap-2">
-										{Array.from(Array(images.length).keys()).map((i) => (
-											<div
-												key={i}
-												className={`transition-all w-1.5 h-1.5 bg-white rounded-full  ${
-													currentImage === i ? "p-0.5" : "bg-opacity-50"
-												}`}
-											/>
-										))}
+										{Array.from(Array(property.images.length).keys()).map(
+											(i) => (
+												<div
+													key={i}
+													className={`transition-all w-1.5 h-1.5 bg-white rounded-full  ${
+														currentImage === i ? "p-0.5" : "bg-opacity-50"
+													}`}
+												/>
+											)
+										)}
 									</div>
 								</div>
 							</div>
@@ -161,21 +168,29 @@ const PropertyDetail = () => {
 									</p>
 								</div>
 								<div className="flex gap-4 mt-6">
-									{!saved ? (
+									{!isSaved ? (
 										<Button
 											className="text-white text-md"
-											onClick={() => saveHandler(id!)}
+											onClick={() => saveHandler()}
 										>
-											<BiHeart className="size-5 mr-2 text-white" />
+											{saveMutation.isPending || isFetching ? (
+												<Loader2 className="mr-2 h-4 w-4 animate-spin" />
+											) : (
+												<BiHeart className="size-5 mr-2 text-white" />
+											)}
 											Save
 										</Button>
 									) : (
 										<Button
 											variant="secondary"
 											className=" text-md"
-											onClick={() => removeSaveHandler(id!)}
+											onClick={() => removeSaveHandler()}
 										>
-											<BiHeart className="size-5 mr-2" />
+											{saveMutation.isPending || isFetching ? (
+												<Loader2 className="mr-2 h-4 w-4 animate-spin" />
+											) : (
+												<BiHeart className="size-5 mr-2" />
+											)}
 											Remove
 										</Button>
 									)}

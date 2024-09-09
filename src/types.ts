@@ -14,4 +14,5 @@ export interface IProperty {
 	price: number;
 	priceLabel: string;
 	title: string;
+	savedAt?: Date;
 }
