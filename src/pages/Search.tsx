@@ -27,7 +27,6 @@ import { useNavigate, useParams } from "react-router-dom";
 
 function Search() {
 	const { status, city } = useParams();
-	const params = useParams();
 	const [tab, setTab] = useState(status);
 	const [searchLocation, setSearchLocation] = useState(city);
 	const [isOpen, setIsOpen] = useState(false);
