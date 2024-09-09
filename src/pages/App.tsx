@@ -26,13 +26,13 @@ import { LoadingSpinner } from "@/components/ui/loading";
 import { useNavigate } from "react-router-dom";
 
 function App() {
-	const [tab, setTab] = useState("sale");
-	const [location, setLocation] = useState("");
+	const [status, setStatus] = useState("sale");
+	const [city, setCity] = useState("");
 	const [isOpen, setIsOpen] = useState(false);
 	const navigate = useNavigate();
 
 	const acceptedLocation = ["london", "manchester", "oxford"].includes(
-		location.toLowerCase()
+		city.toLowerCase()
 	);
 
 	const {
@@ -47,7 +47,7 @@ function App() {
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		if (acceptedLocation) {
-			navigate(`/search/${tab}/${location}`);
+			navigate(`/search/${status}/${city}`);
 		} else setIsOpen(true);
 	};
 
@@ -55,11 +55,11 @@ function App() {
 		event: React.ChangeEvent<HTMLInputElement>
 	) => {
 		const loc = event.target.value;
-		setLocation(loc.charAt(0).toUpperCase() + loc.substring(1).toLowerCase());
+		setCity(loc.charAt(0).toUpperCase() + loc.substring(1).toLowerCase());
 	};
 
 	const onTabChange = (value: string) => {
-		setTab(value);
+		setStatus(value);
 	};
 	return (
 		<div className="flex-auto flex-col w-full">
@@ -81,7 +81,7 @@ function App() {
 
 						<div className="flex flex-col w-full mt-2 ">
 							<div className=" w-full rounded-full py-2 text-sm placeholder:text-muted-foreground flex flex-col sm:flex-row justify-center items-center gap-2 ">
-								<Select onValueChange={onTabChange} value={tab}>
+								<Select onValueChange={onTabChange} value={status}>
 									<SelectTrigger className="w-full sm:w-[100px] focus:ring-0 focus:ring-offset-0	">
 										<SelectValue />
 									</SelectTrigger>
@@ -100,7 +100,7 @@ function App() {
 										type="search"
 										placeholder="London, Manchester or Oxford only"
 										onChange={locationChangeHandler}
-										value={location}
+										value={city}
 										className="focus-visible:ring-0 focus-visible:ring-ring focus-visible:ring-offset-0"
 									/>
 									<Button className="" type="submit">

@@ -23,13 +23,13 @@ import {
 import { getProperties } from "@/api/api";
 import { useQuery } from "@tanstack/react-query";
 import { LoadingSpinner } from "@/components/ui/loading";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 function Search() {
-	const { tab: paramTab, location: paramLocation } = useParams();
-	const location = useLocation();
-	const [tab, setTab] = useState(paramTab);
-	const [searchLocation, setSearchLocation] = useState(paramLocation);
+	const { status, city } = useParams();
+	const params = useParams();
+	const [tab, setTab] = useState(status);
+	const [searchLocation, setSearchLocation] = useState(city);
 	const [isOpen, setIsOpen] = useState(false);
 	const [sort, setSort] = useState<"asc" | "desc">("desc"); // Updated type to "asc" | "desc"
 
@@ -39,26 +39,22 @@ function Search() {
 		searchLocation !== undefined &&
 		["london", "manchester", "oxford"].includes(searchLocation.toLowerCase());
 
-	useEffect(() => {
-		if (location.state?.scrollPosition) {
-			window.scrollTo(0, location.state.scrollPosition);
-		}
-	}, [location.state?.scrollPosition]);
-
 	const {
 		data: properties,
 		isLoading,
 		refetch,
 		isFetching,
 	} = useQuery({
-		queryKey: ["getProperties"],
+		queryKey: ["getProperties", city, status, sort],
 		queryFn: () =>
 			getProperties({
-				city: paramLocation,
-				status: paramTab,
-				sort: sort,
+				city,
+				status,
+				sort,
 			}),
-		enabled: false,
+		refetchOnWindowFocus: false, // Prevent refetching on window focus
+		gcTime: 1000 * 60 * 5, // Cache data for 5 minutes
+		staleTime: 1000 * 60 * 5, // Data is considered fresh for 5 minutes
 	});
 
 	useEffect(() => {
@@ -88,10 +84,6 @@ function Search() {
 		}
 	}, []);
 
-	useEffect(() => {
-		refetch();
-	}, [location, sort]);
-
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		if (!acceptedLocation) setIsOpen(true);
@@ -115,8 +107,6 @@ function Search() {
 	const onSortChange = (value: "asc" | "desc") => {
 		setSort(value);
 	};
-
-	console.log("sort", sort);
 
 	return (
 		<div className="flex-auto flex-col w-full">

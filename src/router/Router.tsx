@@ -37,7 +37,7 @@ const InnerRouter = () => {
 					element: <Saved />,
 				},
 				{
-					path: "/search/:tab?/:location?",
+					path: "/search/:status?/:city?",
 					element: <Search />,
 				},
 				{
