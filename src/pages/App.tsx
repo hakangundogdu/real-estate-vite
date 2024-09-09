@@ -66,8 +66,7 @@ function App() {
 			<div
 				className="w-full bg-center bg-cover h:64 md:h-96"
 				style={{
-					backgroundImage:
-						"url(https://images.unsplash.com/photo-1570129477492-45c003edd2be?q=80&w=2070)",
+					backgroundImage: "url('/hero_image.jpeg')",
 				}}
 			>
 				<div className="flex items-center justify-center w-full h-full bg-gray-900 bg-opacity-40 py-12 px-4">
