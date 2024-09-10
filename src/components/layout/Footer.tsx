@@ -8,7 +8,15 @@ const Footer: React.FC = () => {
 						<a href="/" className="hover:underline mx-2">
 							Dream Home.
 						</a>
-						All Rights Reserved.
+						By
+						<a
+							href="https://github.com/hakangundogdu"
+							className="hover:underline ml-1 text-primary"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							Hakan Gundogdu
+						</a>
 					</span>
 					<ul className="hidden md:flex flex-wrap items-center mt-3 text-sm font-medium sm:mt-0">
 						<li>
